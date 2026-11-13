@@ -1,0 +1,1 @@
+Save browser tabs into searchable local sessions, close the archived tabs, and restore saved links on request.

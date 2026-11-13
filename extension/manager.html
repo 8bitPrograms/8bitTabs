@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>8bitTabs · Tab archive</title>
+  <link rel="icon" href="icons/icon32.png" type="image/png">
+  <link rel="stylesheet" href="workspace.css">
+  <script type="module" src="manager.js"></script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="5" rx="1.5"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-1 3-3 1-2 3 2 2-1 4 3 2 3-1 3 4 3-2 1-3 4-2v-4l-3-1-1-4-3-1-2 2Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="m9 3 12 12-4 1-3 4-4-6-6-4 4-3ZM10 14l-7 7"/></symbol>
+    <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12-6 1 1-6ZM13 6l5 5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-restore" viewBox="0 0 24 24"><path d="M3 4v6h6M3 10a9 9 0 1 1 0 7M12 7v6l4 2"/></symbol>
+  </svg>
+
+  <aside class="sidebar">
+    <a class="brand" href="manager.html" aria-label="8bitTabs home" data-i18n-label="home"><img src="icons/icon48.png" width="40" height="40" alt=""><span class="brand-copy"><span class="brand-wordmark"><strong>8bit</strong><span>Tabs</span></span><span class="brand-family">8bitPrograms</span></span></a>
+    <div class="workspace-label" data-i18n="workspace">YOUR PERSONAL SPACE</div>
+    <nav aria-label="Archive navigation" data-i18n-label="navigation">
+      <button class="nav-button active" data-view="all" data-i18n-label="all_sessions"><svg><use href="#i-grid"/></svg><span data-i18n="all_sessions">All sessions</span><span class="count" id="all-count">0</span></button>
+      <button class="nav-button" data-view="starred" data-i18n-label="starred"><svg><use href="#i-star"/></svg><span data-i18n="starred">Starred</span><span class="count" id="star-count">0</span></button>
+      <div class="nav-heading"><span data-i18n="folders">FOLDERS</span><button class="icon-button" id="add-folder" aria-label="New folder" title="New folder" data-i18n-label="new_folder"><svg><use href="#i-plus"/></svg></button></div>
+      <div id="folders"></div>
+      <p class="folder-hint" id="folder-hint" data-i18n="folder_hint">Make room for your projects.</p>
+      <div class="nav-divider"></div>
+      <button class="nav-button" data-view="trash" data-i18n-label="trash"><svg><use href="#i-trash"/></svg><span data-i18n="trash">Trash</span><span class="count" id="trash-count">0</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-button" id="backup-button" data-i18n-label="backup_import"><svg><use href="#i-download"/></svg><span data-i18n="backup_import">Backup &amp; import</span></button>
+      <button class="nav-button" id="settings-button" data-i18n-label="settings"><svg><use href="#i-settings"/></svg><span data-i18n="settings">Settings</span></button>
+      <div class="local-note"><span class="status-dot"></span><span><span data-i18n="local_only">Only on this device</span><br><small data-i18n="open_source">Open source. Yours to keep.</small></span><span class="version">v1.2.0</span></div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar"><div class="breadcrumb"><svg aria-hidden="true"><use href="#i-archive"/></svg><span data-i18n="workspace_short">Library</span><span class="breadcrumb-divider" aria-hidden="true">/</span><span id="breadcrumb-view">All sessions</span></div><div class="topbar-actions"><kbd>Alt + Shift + O</kbd><span class="privacy-pill"><svg aria-hidden="true"><use href="#i-shield"/></svg><span data-i18n="privacy">Local &amp; private</span></span></div></header>
+    <section class="hero" aria-labelledby="hero-title">
+      <div><div class="eyebrow"><span></span><b data-i18n="hero_eyebrow">SAVE. CLOSE. COME BACK.</b></div><h1 id="hero-title"><span class="hero-first" data-i18n="hero_first">Less clutter.</span><br><span data-i18n="hero_second">More headspace.</span></h1><p data-i18n="hero_description">Archive the tabs you're done with. Pick up any session when you're ready.</p></div>
+      <div class="archive-action"><button class="primary archive-button" id="archive-button"><svg><use href="#i-archive"/></svg><span data-i18n="archive_tabs">Archive tabs</span><span class="archive-arrow" aria-hidden="true">↗</span></button><span id="archive-scope">All windows · Pinned tabs stay open</span></div>
+    </section>
+    <section class="metrics" aria-label="Archive totals" data-i18n-label="archive_totals">
+      <div class="metric"><span class="metric-icon"><svg aria-hidden="true"><use href="#i-window"/></svg></span><div><strong id="metric-tabs">0</strong><small data-i18n="stat_tabs">Archived tabs</small></div></div>
+      <div class="metric"><span class="metric-icon"><svg aria-hidden="true"><use href="#i-archive"/></svg></span><div><strong id="metric-sessions">0</strong><small data-i18n="stat_sessions">Saved sessions</small></div></div>
+      <div class="metric"><span class="metric-icon"><svg aria-hidden="true"><use href="#i-folder"/></svg></span><div><strong id="metric-folders">0</strong><small data-i18n="stat_folders">Folders</small></div></div>
+    </section>
+    <div id="notice" class="notice" role="status" hidden><span id="notice-text"></span><button class="icon-button" id="dismiss-notice" aria-label="Dismiss notification" data-i18n-label="dismiss_notice"><svg><use href="#i-close"/></svg></button></div>
+    <section class="library" aria-labelledby="view-title">
+      <div class="library-heading"><div><h2 id="view-title">All sessions</h2><span id="view-description">Loading your archive…</span></div><div class="heading-actions"><button class="icon-button" id="edit-folder" title="Edit folder" aria-label="Edit folder" data-i18n-label="edit_folder" hidden><svg><use href="#i-edit"/></svg></button><button class="icon-button danger" id="delete-folder" title="Delete folder" aria-label="Delete folder" data-i18n-label="delete_folder" hidden><svg><use href="#i-trash"/></svg></button></div></div>
+      <div class="toolbar"><label class="search-box"><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="Search titles, URLs, sessions or notes…" data-i18n-placeholder="search_placeholder" autocomplete="off" aria-label="Search archive" data-i18n-label="search_archive"><kbd>/</kbd></label><label class="sort-label"><span class="sr-only" data-i18n="sort">Sort order</span><select id="sort"><option value="newest" data-i18n="sort_newest">Newest first</option><option value="oldest" data-i18n="sort_oldest">Oldest first</option><option value="title" data-i18n="sort_title">By name</option></select></label><div class="layout-switch" role="group" aria-label="Archive view" data-i18n-label="layout_label"><button class="icon-button" type="button" data-layout="grid" aria-pressed="true" aria-label="Card view" data-i18n-label="grid_view"><svg><use href="#i-grid"/></svg></button><button class="icon-button" type="button" data-layout="list" aria-pressed="false" aria-label="List view" data-i18n-label="list_view"><svg><use href="#i-list"/></svg></button></div></div>
+      <p class="search-summary" id="search-summary" aria-live="polite" hidden></p>
+      <div id="sessions" aria-live="polite"></div>
+      <div id="empty-state" class="empty-state" hidden><div class="empty-icon"><svg><use href="#i-archive"/></svg></div><h3 id="empty-title">A little space feels good.</h3><p id="empty-description">Click the 8bitTabs icon in your toolbar.</p></div>
+      <button class="secondary load-more" id="load-more" data-i18n="load_more" hidden>Show more sessions</button>
+    </section>
+    <footer><span data-i18n="footer_left">Everything you saved, right where you left it.</span><span data-i18n="footer_right">No account. No cloud. No tracking.</span></footer>
+  </main>
+
+  <dialog id="settings-dialog"><form id="settings-form">
+    <div class="dialog-heading"><div><span class="eyebrow" data-i18n="settings_eyebrow">MAKE IT YOURS</span><h2 data-i18n="settings">Settings</h2></div><button class="icon-button" type="button" data-close aria-label="Close" data-i18n-label="close"><svg><use href="#i-close"/></svg></button></div>
+    <label class="field-label"><span data-i18n="language">Language</span><select id="language"><option value="en">English</option><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="es">Español</option></select><small data-i18n="language_hint">English is the default. Your choice is saved on this device.</small></label>
+    <label class="setting-row"><span><strong data-i18n="include_pinned">Archive pinned tabs too</strong><small data-i18n="include_pinned_hint">When off, pinned tabs stay open.</small></span><input type="checkbox" role="switch" id="include-pinned"></label>
+    <label class="field-label"><span data-i18n="archive_scope">Archiving scope</span><select id="scope"><option value="all" data-i18n="scope_all">All normal windows</option><option value="current" data-i18n="scope_current">Only the current window</option></select></label>
+    <label class="field-label"><span data-i18n="appearance">Appearance</span><select id="theme"><option value="dark" data-i18n="theme_dark">Dark</option><option value="light" data-i18n="theme_light">Light</option><option value="system" data-i18n="theme_system">System setting</option></select></label>
+    <div class="info-box"><svg><use href="#i-pin"/></svg><p data-i18n="shortcut_hint">Clicking the icon saves and closes tabs. To browse your archive without closing tabs, use Alt + Shift + O or right-click the extension and choose Options.</p></div>
+    <p class="fine-print" data-i18n="archive_limitations">URLs and titles are saved. Page content, form data and tab history are not saved. Private windows and unsupported special tabs stay untouched.</p>
+    <div class="dialog-actions"><button type="button" class="secondary" data-close data-i18n="cancel">Cancel</button><button type="submit" class="primary" data-i18n="save_settings">Save settings</button></div>
+  </form></dialog>
+
+  <dialog id="session-dialog"><form id="session-form"><div class="dialog-heading"><h2 data-i18n="edit_session">Edit session</h2><button class="icon-button" type="button" data-close aria-label="Close" data-i18n-label="close"><svg><use href="#i-close"/></svg></button></div><input type="hidden" id="session-id"><label class="field-label"><span data-i18n="session_name">Session name</span><input id="session-title" maxlength="160" required></label><label class="field-label"><span data-i18n="folder">Folder</span><select id="session-folder"></select></label><label class="field-label"><span data-i18n="notes">A note to yourself</span><textarea id="session-notes" rows="3" maxlength="10000" placeholder="What were these tabs for?" data-i18n-placeholder="notes_placeholder"></textarea></label><label class="check-label"><input type="checkbox" id="session-starred"><span data-i18n="add_starred">Add to starred</span></label><div class="dialog-actions"><button type="button" class="secondary" data-close data-i18n="cancel">Cancel</button><button type="submit" class="primary" data-i18n="save">Save</button></div></form></dialog>
+
+  <dialog id="folder-dialog"><form id="folder-form"><div class="dialog-heading"><h2 id="folder-dialog-title">New folder</h2><button type="button" class="icon-button" data-close aria-label="Close" data-i18n-label="close"><svg><use href="#i-close"/></svg></button></div><input type="hidden" id="folder-id"><label class="field-label"><span data-i18n="folder_name">Folder name</span><input id="folder-name" maxlength="80" placeholder="For example: Weekend, Research, Work…" data-i18n-placeholder="folder_placeholder" required></label><div class="dialog-actions"><button type="button" class="secondary" data-close data-i18n="cancel">Cancel</button><button class="primary" type="submit" data-i18n="save">Save</button></div></form></dialog>
+
+  <dialog id="backup-dialog"><div class="dialog-heading"><div><span class="eyebrow" data-i18n="backup_eyebrow">YOU'RE IN CONTROL</span><h2 data-i18n="backup_title">Take your archive with you</h2></div><button type="button" class="icon-button" data-close aria-label="Close" data-i18n-label="close"><svg><use href="#i-close"/></svg></button></div><section class="backup-section"><h3 data-i18n="export_title">Keep a copy</h3><p data-i18n="export_description">All sessions, folders and trash in one JSON file. Settings are not exported.</p><button class="primary" id="export-button"><svg><use href="#i-download"/></svg><span data-i18n="export_button">Download JSON backup</span></button></section><section class="backup-section"><h3 data-i18n="import_title">Pick up where you left off</h3><p data-i18n="import_description">Choose a 8bitTabs JSON backup or a text file exported by OneTab. Your existing archive is kept; 8bitTabs sessions with the same ID are skipped.</p><label class="field-label"><span data-i18n="file_format">File format</span><select id="import-kind"><option value="json" data-i18n="format_json">8bitTabs backup (.json)</option><option value="onetab" data-i18n="format_onetab">OneTab text (.txt)</option></select></label><label class="file-picker"><svg><use href="#i-upload"/></svg><span data-i18n="import_button">Choose a file to import</span><input type="file" id="import-file" accept=".json,application/json" data-i18n-label="import_button"></label><span class="fine-print" data-i18n="import_limit">Up to 25 MB. Files are processed on your device.</span></section><div class="info-box"><svg><use href="#i-shield"/></svg><p data-i18n="backup_warning">Backups are not encrypted and may include personal information in URLs. Keep them safe. Make a backup before uninstalling the extension.</p></div></dialog>
+
+  <dialog id="confirm-dialog"><div class="dialog-heading"><h2 id="confirm-title">Continue?</h2></div><p id="confirm-description"></p><div class="dialog-actions"><button class="secondary" id="confirm-cancel" data-i18n="cancel">Cancel</button><button class="primary" id="confirm-ok">Continue</button></div></dialog>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>

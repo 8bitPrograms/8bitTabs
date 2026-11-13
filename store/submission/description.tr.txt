@@ -1,0 +1,17 @@
+Sekmelerini kaydet. Tarayıcında yer aç. Hazır olduğunda geri dön.
+
+8bitTabs, açık sekmelerini tek tıkla tarihli oturumlara kaydeder ve kapatır. Sabitlenmiş sekmeler varsayılan olarak açık kalır; Ayarlar'dan dahil edilebilir.
+
+Başlık, adres, oturum adı, not ve klasörlerde ara. Oturumları adlandır, not ekle, yıldızla ve klasörle. Kart veya liste görünümünü seç. Bir bağlantıyı, bütün oturumu ya da özgün pencere ayrımını geri aç; arşiv kaydı korunur. Silinen oturumlar kalıcı silinene kadar çöp kutusunda saklanır.
+
+Tamamen yerel çalışır. Hesap, bulut senkronizasyonu, analiz, reklam, uzak kod ve harici favicon servisi yoktur. Kayıt doğrulanmadan sekmeler kapatılmaz. Sayfa içeriği ve tarayıcının geçmiş veritabanı okunmaz.
+
+JSON yedeklerini dışa aktar veya birleştir; OneTab metin dosyalarını içe al. Yedekler şifrelenmez.
+
+Varsayılan dil İngilizcedir. Türkçe, Almanca, Fransızca ve İspanyolca seçilebilir. Koyu, açık ve sistem temaları vardır.
+
+Simgeye tıklamak sekmeleri kaydeder ve kapatır. Sadece arşive bakmak için Alt+Shift+O kullan veya simgeye sağ tıkla ve Seçenekler'i aç.
+
+Yalnızca adres, başlık ve sekme bilgileri kaydedilir. Form verileri, sayfa içeriği, sekme gezinti geçmişi ve tarayıcı sekme grupları saklanmaz. Gizli pencereler ve desteklenmeyen özel sayfalar atlanır.
+
+GPL-3.0 lisanslı açık kaynak yazılım.

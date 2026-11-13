@@ -1,0 +1,206 @@
+{
+  "format": "tabdock-backup",
+  "version": 1,
+  "folders": [
+    {
+      "id": "demo-folder-dev",
+      "name": "Development",
+      "createdAt": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "demo-folder-read",
+      "name": "Reading list",
+      "createdAt": "2026-11-13T09:00:00Z"
+    },
+    {
+      "id": "demo-folder-work",
+      "name": "Work",
+      "createdAt": "2026-11-13T09:00:00Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "demo-session-dev",
+      "title": "Build something. Keep the trail.",
+      "notes": "References for the next weekend project.",
+      "createdAt": "2026-11-13T12:42:00Z",
+      "folderId": "demo-folder-dev",
+      "starred": true,
+      "deletedAt": null,
+      "tabs": [
+        {
+          "id": "dev-1",
+          "title": "Chrome Extensions · Developer guide",
+          "url": "https://developer.chrome.com/docs/extensions",
+          "pinned": false,
+          "active": true,
+          "muted": false,
+          "window": 0,
+          "index": 0
+        },
+        {
+          "id": "dev-2",
+          "title": "IndexedDB API — MDN Web Docs",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 1
+        },
+        {
+          "id": "dev-3",
+          "title": "Accessibility for web applications",
+          "url": "https://web.dev/learn/accessibility",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 2
+        },
+        {
+          "id": "dev-4",
+          "title": "Playwright · Browser testing",
+          "url": "https://playwright.dev/docs/intro",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 3
+        },
+        {
+          "id": "dev-5",
+          "title": "CSS Grid Layout",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 4
+        },
+        {
+          "id": "dev-6",
+          "title": "The web platform, at a glance",
+          "url": "https://web.dev/baseline",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 5
+        }
+      ]
+    },
+    {
+      "id": "demo-session-read",
+      "title": "A few good reads for later",
+      "notes": "",
+      "createdAt": "2026-11-12T18:20:00Z",
+      "folderId": "demo-folder-read",
+      "starred": false,
+      "deletedAt": null,
+      "tabs": [
+        {
+          "id": "read-1",
+          "title": "The Creative Independent — On making time for ideas",
+          "url": "https://thecreativeindependent.com/",
+          "pinned": false,
+          "active": true,
+          "muted": false,
+          "window": 0,
+          "index": 0
+        },
+        {
+          "id": "read-2",
+          "title": "A Field Guide to Noticing",
+          "url": "https://www.are.na/",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 1
+        },
+        {
+          "id": "read-3",
+          "title": "Notes from the open source community",
+          "url": "https://opensource.guide/tr/",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 2
+        },
+        {
+          "id": "read-4",
+          "title": "Wikimedia Commons · Picture of the day",
+          "url": "https://commons.wikimedia.org/wiki/Main_Page",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 0,
+          "index": 3
+        }
+      ]
+    },
+    {
+      "id": "demo-session-work",
+      "title": "Database workbench",
+      "notes": "Performance notes and queries to revisit.",
+      "createdAt": "2026-11-11T07:15:00Z",
+      "folderId": "demo-folder-work",
+      "starred": true,
+      "deletedAt": null,
+      "tabs": [
+        {
+          "id": "work-1",
+          "title": "PostgreSQL Documentation · Performance Tips",
+          "url": "https://www.postgresql.org/docs/current/performance-tips.html",
+          "pinned": false,
+          "active": true,
+          "muted": false,
+          "window": 0,
+          "index": 0
+        },
+        {
+          "id": "work-2",
+          "title": "Oracle Database · SQL Tuning Guide",
+          "url": "https://docs.oracle.com/en/database/",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 1,
+          "index": 0
+        },
+        {
+          "id": "work-3",
+          "title": "Use The Index, Luke!",
+          "url": "https://use-the-index-luke.com/",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 1,
+          "index": 1
+        },
+        {
+          "id": "work-4",
+          "title": "SQLite · Query Planning",
+          "url": "https://www.sqlite.org/queryplanner.html",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 1,
+          "index": 2
+        },
+        {
+          "id": "work-5",
+          "title": "MongoDB · Query Optimization",
+          "url": "https://www.mongodb.com/docs/manual/core/query-optimization/",
+          "pinned": false,
+          "active": false,
+          "muted": false,
+          "window": 1,
+          "index": 3
+        }
+      ]
+    }
+  ]
+}

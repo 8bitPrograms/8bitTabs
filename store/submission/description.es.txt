@@ -1,0 +1,17 @@
+Guarda tus pestañas. Haz espacio. Vuelve cuando quieras.
+
+8bitTabs guarda las pestañas abiertas en sesiones con fecha y las cierra con un clic. Las pestañas fijadas siguen abiertas por defecto; puedes incluirlas en Ajustes.
+
+Busca títulos, URL, sesiones, notas y carpetas. Nombra sesiones, añade notas y favoritos. Elige tarjetas o lista. Abre un enlace, una sesión completa o la distribución original de ventanas. La copia archivada se conserva. Las sesiones eliminadas se pueden recuperar de la papelera.
+
+Todo es local: sin cuenta, sincronización en la nube, analítica, anuncios, código remoto ni servicio externo de iconos. Las pestañas se cierran después de guardar y verificar. No se leen el contenido de las páginas ni la base de datos del historial del navegador.
+
+Exporta o importa copias JSON, archivos de texto de OneTab. Las copias no están cifradas.
+
+El inglés es el idioma predeterminado. También puedes elegir turco, alemán, francés y español. Temas oscuro, claro y del sistema.
+
+El icono guarda y cierra pestañas. Para consultar solo el archivo, usa Alt+Shift+O o haz clic derecho en la extensión → Opciones.
+
+No se guardan formularios, contenido de páginas, historial de navegación de pestañas ni grupos de pestañas. Se omiten ventanas privadas y páginas especiales no compatibles.
+
+Código abierto con licencia GPL-3.0.

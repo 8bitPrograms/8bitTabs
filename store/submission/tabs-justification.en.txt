@@ -1,0 +1,1 @@
+Read the URL, title, window order, pin and mute state of tabs selected by the user's archive action. Save a verified local copy before closing those tabs. No page content or browsing-history database is read.

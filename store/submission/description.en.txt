@@ -1,0 +1,25 @@
+Save your tabs. Clear your browser. Come back when you're ready.
+
+8bitTabs saves your open tabs into dated sessions and closes them with one click. Pinned tabs stay open by default; you can include them in Settings.
+
+YOUR ARCHIVE, YOUR WAY
+• Search tab titles, URLs, session names, notes and folders.
+• Name sessions, add notes, star favorites and organize folders.
+• Switch between cards and a compact list.
+• Open a single link, a whole session, or the original window partitions. Restoring keeps the archive copy.
+• Recover deleted sessions from Trash. Permanent deletion asks for confirmation.
+
+LOCAL BY DESIGN
+No account, cloud sync, analytics, ads, remote code or external favicon service. Tabs are saved to a local database and verified before they are closed. The extension does not read page content or your browsing-history database.
+
+KEEP A COPY
+Export JSON backups, merge an existing backup or import OneTab text exports. Backups are not encrypted.
+
+ENGLISH BY DEFAULT
+Choose English, Turkish, German, French or Spanish. Dark, light and system themes are included.
+
+The toolbar icon saves and closes tabs. To browse your archive without closing anything, use Alt+Shift+O or right-click the extension and choose Options.
+
+Only URLs, titles and tab metadata are archived. Form data, page content, page navigation history and browser tab groups are not saved. Private windows and unsupported special pages are skipped.
+
+Open source under the GPL-3.0 license.

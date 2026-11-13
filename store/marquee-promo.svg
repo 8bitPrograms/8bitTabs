@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+    <rect width="1400" height="560" fill="#101419"/>
+    <rect x="1060" width="340" height="560" fill="#141a21"/>
+    <path d="M0 555H1400" stroke="#F5B544" stroke-width="10"/>
+    <svg x="64" y="74" width="112" height="112" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <path d="M2 1H14V2H15V14H14V15H2V14H1V2H2Z" fill="#F5B544"/>
+  <g fill="#20252A">
+    <path d="M4 3H12V4H13V6H3V4H4Z"/>
+    <path d="M4 6H12V11H11V12H5V11H4Z"/>
+  </g>
+  <g fill="#F5B544">
+    <rect x="4" y="4" width="8" height="1"/>
+    <rect x="5" y="6" width="6" height="5"/>
+  </g>
+  <rect x="7" y="8" width="2" height="1" fill="#20252A"/>
+</svg>
+    <text x="190" y="147.92000000000002" fill="#EDF2F7" font-family="Segoe UI,Arial,sans-serif" font-size="61" font-weight="700">8bit<tspan fill="#F5B544">Tabs</tspan></text>
+    <text x="64" y="252" fill="#EDF2F7" font-family="Segoe UI,Arial,sans-serif" font-size="59" font-weight="650">Less clutter.</text>
+    <text x="64" y="323" fill="#F5B544" font-family="Segoe UI,Arial,sans-serif" font-size="59" font-weight="650">More headspace.</text>
+    <text x="64" y="459" fill="#ABB7C5" font-family="Consolas,monospace" font-size="17" letter-spacing="1">SAVE. CLOSE. COME BACK.</text>
+    <text x="64" y="495" fill="#ABB7C5" font-family="Segoe UI,Arial,sans-serif" font-size="17">Local. Open source. Your tabs stay yours.</text>
+    <g fill="none" stroke="#303c4a" stroke-width="2"><rect x="1007" y="130" width="275" height="164" rx="5"/><rect x="1040" y="174" width="275" height="164" rx="5"/><rect x="1073" y="218" width="275" height="164" rx="5"/><path d="M1095 253h230M1095 283h190M1095 313h210"/></g><path d="M1073 218h275" stroke="#F5B544" stroke-width="3"/>
+  </svg>

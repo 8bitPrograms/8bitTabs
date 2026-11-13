@@ -1,0 +1,1 @@
+Keep the local IndexedDB archive available as it grows, without the normal storage quota or automatic eviction limits. The archive contains user-created sessions, folders and notes; nothing is uploaded.

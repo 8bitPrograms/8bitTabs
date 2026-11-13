@@ -1,0 +1,51 @@
+{
+  "product": "8bitTabs",
+  "version": "1.2.1",
+  "title": "8bitTabs — Private Tab Archive",
+  "defaultLanguage": "en",
+  "publisherName": "8bitPrograms",
+  "sourceUrl": "https://github.com/8bitPrograms/8bitTabs",
+  "supportUrl": "https://github.com/8bitPrograms/8bitTabs/issues",
+  "privacyPolicyUrl": "https://github.com/8bitPrograms/8bitTabs/blob/main/PRIVACY.md",
+  "singlePurpose": "Save browser tabs into searchable local sessions, close the archived tabs, and restore saved links on request.",
+  "permissionJustifications": {
+    "tabs": "Read the URL, title, window order, pin and mute state of tabs selected by the user's archive action. Save a verified local copy before closing those tabs. No page content or browsing-history database is read.",
+    "unlimitedStorage": "Keep the local IndexedDB archive available as it grows, without the normal storage quota or automatic eviction limits. The archive contains user-created sessions, folders and notes; nothing is uploaded."
+  },
+  "remoteCode": false,
+  "dataHandlingSummary": "Tab URLs, titles, session names, notes and folder metadata are processed and stored locally. The extension has no network connections, analytics, cloud service or account. Local storage and user-exported JSON files are not encrypted. Declare this local handling accurately in the store privacy fields.",
+  "locales": {
+    "en": {
+      "description": "Save your tabs. Clear your browser. Come back when you're ready.\n\n8bitTabs saves your open tabs into dated sessions and closes them with one click. Pinned tabs stay open by default; you can include them in Settings.\n\nYOUR ARCHIVE, YOUR WAY\n• Search tab titles, URLs, session names, notes and folders.\n• Name sessions, add notes, star favorites and organize folders.\n• Switch between cards and a compact list.\n• Open a single link, a whole session, or the original window partitions. Restoring keeps the archive copy.\n• Recover deleted sessions from Trash. Permanent deletion asks for confirmation.\n\nLOCAL BY DESIGN\nNo account, cloud sync, analytics, ads, remote code or external favicon service. Tabs are saved to a local database and verified before they are closed. The extension does not read page content or your browsing-history database.\n\nKEEP A COPY\nExport JSON backups, merge an existing backup or import OneTab text exports. Backups are not encrypted.\n\nENGLISH BY DEFAULT\nChoose English, Turkish, German, French or Spanish. Dark, light and system themes are included.\n\nThe toolbar icon saves and closes tabs. To browse your archive without closing anything, use Alt+Shift+O or right-click the extension and choose Options.\n\nOnly URLs, titles and tab metadata are archived. Form data, page content, page navigation history and browser tab groups are not saved. Private windows and unsupported special pages are skipped.\n\nOpen source under the GPL-3.0 license."
+    },
+    "tr": {
+      "description": "Sekmelerini kaydet. Tarayıcında yer aç. Hazır olduğunda geri dön.\n\n8bitTabs, açık sekmelerini tek tıkla tarihli oturumlara kaydeder ve kapatır. Sabitlenmiş sekmeler varsayılan olarak açık kalır; Ayarlar'dan dahil edilebilir.\n\nBaşlık, adres, oturum adı, not ve klasörlerde ara. Oturumları adlandır, not ekle, yıldızla ve klasörle. Kart veya liste görünümünü seç. Bir bağlantıyı, bütün oturumu ya da özgün pencere ayrımını geri aç; arşiv kaydı korunur. Silinen oturumlar kalıcı silinene kadar çöp kutusunda saklanır.\n\nTamamen yerel çalışır. Hesap, bulut senkronizasyonu, analiz, reklam, uzak kod ve harici favicon servisi yoktur. Kayıt doğrulanmadan sekmeler kapatılmaz. Sayfa içeriği ve tarayıcının geçmiş veritabanı okunmaz.\n\nJSON yedeklerini dışa aktar veya birleştir; OneTab metin dosyalarını içe al. Yedekler şifrelenmez.\n\nVarsayılan dil İngilizcedir. Türkçe, Almanca, Fransızca ve İspanyolca seçilebilir. Koyu, açık ve sistem temaları vardır.\n\nSimgeye tıklamak sekmeleri kaydeder ve kapatır. Sadece arşive bakmak için Alt+Shift+O kullan veya simgeye sağ tıkla ve Seçenekler'i aç.\n\nYalnızca adres, başlık ve sekme bilgileri kaydedilir. Form verileri, sayfa içeriği, sekme gezinti geçmişi ve tarayıcı sekme grupları saklanmaz. Gizli pencereler ve desteklenmeyen özel sayfalar atlanır.\n\nGPL-3.0 lisanslı açık kaynak yazılım."
+    },
+    "de": {
+      "description": "Tabs speichern. Platz schaffen. Später zurückkehren.\n\n8bitTabs speichert offene Tabs mit einem Klick in datierten Sitzungen und schließt sie. Angeheftete Tabs bleiben standardmäßig offen und können in den Einstellungen eingeschlossen werden.\n\nDurchsuche Titel, URLs, Sitzungen, Notizen und Ordner. Benenne Sitzungen, füge Notizen hinzu und markiere Favoriten. Wechsle zwischen Karten- und Listenansicht. Öffne einzelne Links, ganze Sitzungen oder die ursprüngliche Fensteraufteilung. Die Archivkopie bleibt erhalten. Gelöschte Sitzungen können aus dem Papierkorb wiederhergestellt werden.\n\nAlles bleibt lokal. Kein Konto, keine Cloud-Synchronisierung, keine Analyse, keine Werbung, kein entfernter Code und kein externer Favicon-Dienst. Erst nach dem Speichern und Überprüfen werden Tabs geschlossen. Seiteninhalte und die Browser-Verlaufsdatenbank werden nicht gelesen.\n\nExportiere JSON-Sicherungen oder importiere vorhandene Sicherungen, OneTab-Textdateien. Sicherungen sind nicht verschlüsselt.\n\nEnglisch ist die Standardsprache. Türkisch, Deutsch, Französisch und Spanisch sind auswählbar. Dunkle, helle und Systemdarstellung werden unterstützt.\n\nDas Symbol speichert und schließt Tabs. Alt+Shift+O oder Rechtsklick auf das Symbol → Optionen öffnet nur das Archiv.\n\nFormulardaten, Seiteninhalte, der Navigationsverlauf und Browser-Tabgruppen werden nicht gespeichert. Private Fenster und nicht unterstützte Spezialseiten werden ausgelassen.\n\nOpen Source unter der GPL-3.0-Lizenz."
+    },
+    "fr": {
+      "description": "Enregistrez vos onglets. Faites de la place. Revenez quand vous le souhaitez.\n\n8bitTabs enregistre les onglets ouverts dans des sessions datées et les ferme en un clic. Les onglets épinglés restent ouverts par défaut ; vous pouvez les inclure dans les paramètres.\n\nRecherchez parmi les titres, URL, sessions, notes et dossiers. Nommez vos sessions, ajoutez des notes et des favoris. Choisissez les cartes ou la liste. Rouvrez un lien, une session entière ou la répartition initiale des fenêtres. La copie archivée est conservée. Les sessions supprimées peuvent être récupérées dans la corbeille.\n\nTout reste local : sans compte, synchronisation cloud, analyse, publicité, code distant ni service externe d'icônes. Les onglets ne sont fermés qu'après enregistrement et vérification. Le contenu des pages et la base de l'historique du navigateur ne sont pas lus.\n\nExportez ou importez des sauvegardes JSON, des fichiers texte OneTab. Les sauvegardes ne sont pas chiffrées.\n\nL'anglais est la langue par défaut. Le turc, l'allemand, le français et l'espagnol sont disponibles. Thèmes sombre, clair et système.\n\nL'icône enregistre et ferme les onglets. Pour consulter uniquement les archives, utilisez Alt+Shift+O ou le menu contextuel de l'extension → Options.\n\nLes formulaires, le contenu des pages, l'historique de navigation des onglets et les groupes d'onglets ne sont pas enregistrés. Les fenêtres privées et les pages spéciales non prises en charge sont ignorées.\n\nCode ouvert sous licence GPL-3.0."
+    },
+    "es": {
+      "description": "Guarda tus pestañas. Haz espacio. Vuelve cuando quieras.\n\n8bitTabs guarda las pestañas abiertas en sesiones con fecha y las cierra con un clic. Las pestañas fijadas siguen abiertas por defecto; puedes incluirlas en Ajustes.\n\nBusca títulos, URL, sesiones, notas y carpetas. Nombra sesiones, añade notas y favoritos. Elige tarjetas o lista. Abre un enlace, una sesión completa o la distribución original de ventanas. La copia archivada se conserva. Las sesiones eliminadas se pueden recuperar de la papelera.\n\nTodo es local: sin cuenta, sincronización en la nube, analítica, anuncios, código remoto ni servicio externo de iconos. Las pestañas se cierran después de guardar y verificar. No se leen el contenido de las páginas ni la base de datos del historial del navegador.\n\nExporta o importa copias JSON, archivos de texto de OneTab. Las copias no están cifradas.\n\nEl inglés es el idioma predeterminado. También puedes elegir turco, alemán, francés y español. Temas oscuro, claro y del sistema.\n\nEl icono guarda y cierra pestañas. Para consultar solo el archivo, usa Alt+Shift+O o haz clic derecho en la extensión → Opciones.\n\nNo se guardan formularios, contenido de páginas, historial de navegación de pestañas ni grupos de pestañas. Se omiten ventanas privadas y páginas especiales no compatibles.\n\nCódigo abierto con licencia GPL-3.0."
+    }
+  },
+  "license": "GPL-3.0-only",
+  "category": "Workflow & Planning",
+  "testInstructions": "No login or setup is required. Use a clean test profile. Open two normal web pages and pin one. Click the extension icon: unpinned tabs are saved in a dated session and closed; pinned tabs stay open. Search the archive and reopen a saved link. In Settings, enable Include pinned tabs and repeat. Export JSON, then import it to check backup merging. Press Alt+Shift+O or use the icon's right-click > Options to open the archive without closing tabs.",
+  "dataUsage": {
+    "handledDataTypes": [
+      "Web history"
+    ],
+    "notSoldOrTransferred": true,
+    "useLimitedToSinglePurpose": true,
+    "notUsedForCreditworthiness": true
+  },
+  "distribution": {
+    "payment": "Free of charge",
+    "visibility": "Public",
+    "regions": "All regions",
+    "group": "None"
+  }
+}
