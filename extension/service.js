@@ -1,9 +1,15 @@
-import { cleanSettings, isRestorableUrl, makeSession, parseOneTab, tabUrl, uid, validateBackup } from "./core.js";
+import { cleanSettings, isBlankOrInternalUrl, isRestorableUrl, makeSession, parseOneTab, tabUrl, uid, validateBackup } from "./core.js";
 import { LocalizedError } from "./i18n.js";
 
 export function createService(api, db) {
   const managerUrl = api.runtime.getURL("manager.html");
+  const extensionRoot = api.runtime.getURL("");
   let archiveFlight = null;
+
+  function isProtectedPage(tab) {
+    return [tab.url, tab.pendingUrl].some((url) => typeof url === "string"
+      && (url.startsWith(extensionRoot) || (url.startsWith("chrome-extension://") && !isBlankOrInternalUrl(url))));
+  }
 
   async function openManager(windowId) {
     const tabs = await api.tabs.query({});
@@ -23,33 +29,53 @@ export function createService(api, db) {
     const options = { windowType: "normal" };
     if (settings.scope === "current") options.windowId = windowId;
     const tabs = await api.tabs.query(options);
-    const candidates = tabs.filter((tab) => !tab.incognito && (settings.includePinned || !tab.pinned) && isRestorableUrl(tabUrl(tab)));
+    const candidates = tabs.filter((tab) => {
+      if (tab.incognito || (!settings.includePinned && tab.pinned)) return false;
+      if (isProtectedPage(tab)) return false;
+      const url = tabUrl(tab);
+      return isBlankOrInternalUrl(url) ? settings.closeInternalTabs === true : isRestorableUrl(url);
+    });
     const skipped = tabs.length - candidates.length;
     if (!candidates.length) {
       await db.putMeta("notice", { kind: "info", key: "no_tabs", at: Date.now() });
       await openManager(windowId);
-      return { saved: 0, closed: 0, kept: 0, skipped };
+      return { saved: 0, closed: 0, kept: 0, skipped, internalClosed: 0 };
     }
-    const session = makeSession(candidates, settings);
-    await db.addSession(session);
-    const saved = await db.getSession(session.id);
-    if (!saved || JSON.stringify(saved) !== JSON.stringify(session)) throw new LocalizedError("archive_verify_failed");
+    const archivable = candidates.filter((tab) => !isBlankOrInternalUrl(tabUrl(tab)));
+    // Optional browser-page cleanup never creates an empty session or stores internal URLs.
+    const session = archivable.length ? makeSession(archivable, settings) : null;
+    if (session) {
+      await db.addSession(session);
+      const saved = await db.getSession(session.id);
+      if (!saved || JSON.stringify(saved) !== JSON.stringify(session)) throw new LocalizedError("archive_verify_failed");
+    }
     // Keep a browser window alive, and ensure the archive is reachable, before closing tabs.
     await openManager(windowId);
     let closed = 0;
     let kept = 0;
+    let internalClosed = 0;
+    let archivedKept = 0;
     for (const snapshot of candidates) {
+      const internal = isBlankOrInternalUrl(tabUrl(snapshot));
       try {
         const live = await api.tabs.get(snapshot.id);
         // A navigation, window move, pin or unpin during saving must not close an unrelated state.
-        if (live.incognito || live.windowId !== snapshot.windowId || live.pinned !== snapshot.pinned || tabUrl(live) !== tabUrl(snapshot)) { kept++; continue; }
+        if (live.incognito || isProtectedPage(live) || live.windowId !== snapshot.windowId || live.pinned !== snapshot.pinned || tabUrl(live) !== tabUrl(snapshot)) {
+          kept++;
+          if (!internal) archivedKept++;
+          continue;
+        }
         await api.tabs.remove(snapshot.id);
         closed++;
-      } catch { kept++; }
+        if (internal) internalClosed++;
+      } catch {
+        kept++;
+        if (!internal) archivedKept++;
+      }
     }
-    await db.putSession({ ...session, closedCount: closed, keptCount: kept });
-    await db.putMeta("notice", { kind: "success", key: "archive_summary", params: { saved: session.tabs.length, closed, kept }, at: Date.now() });
-    return { sessionId: session.id, saved: session.tabs.length, closed, kept, skipped };
+    if (session) await db.putSession({ ...session, closedCount: closed - internalClosed, keptCount: archivedKept });
+    await db.putMeta("notice", { kind: "success", key: "archive_summary", params: { saved: archivable.length, closed, kept, internalClosed }, at: Date.now() });
+    return { ...(session ? { sessionId: session.id } : {}), saved: archivable.length, closed, kept, skipped, internalClosed };
   }
 
   function archive(windowId) {

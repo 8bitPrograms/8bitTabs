@@ -291,6 +291,7 @@ $("#archive-button").addEventListener("click", () => busy($("#archive-button"), 
 $("#dismiss-notice").addEventListener("click", () => busy($("#dismiss-notice"), async () => { await request("notice:clear"); await refresh(); }));
 $("#settings-button").addEventListener("click", () => {
   $("#include-pinned").checked = state.settings.includePinned;
+  $("#close-internal-tabs").checked = state.settings.closeInternalTabs;
   $("#scope").value = state.settings.scope;
   $("#theme").value = state.settings.theme;
   $("#language").value = state.settings.language;
@@ -305,7 +306,7 @@ function handleForm(selector, submit) {
 }
 
 handleForm("#settings-form", async () => {
-  await request("settings", { value: { ...state.settings, includePinned: $("#include-pinned").checked, scope: $("#scope").value, theme: $("#theme").value, language: $("#language").value } });
+  await request("settings", { value: { ...state.settings, includePinned: $("#include-pinned").checked, closeInternalTabs: $("#close-internal-tabs").checked, scope: $("#scope").value, theme: $("#theme").value, language: $("#language").value } });
   $("#settings-dialog").close();
   await refresh();
   toast(t("settings_saved"));

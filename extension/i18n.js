@@ -41,8 +41,8 @@ export class LocalizedError extends Error {
 export function translateNotice(language, notice) {
   if (!notice) return "";
   if (notice.key === "archive_summary") {
-    const { saved = 0, closed = 0, kept = 0 } = notice.params || {};
-    return [translate(language, "archive_saved", { count: saved }), translate(language, "archive_closed", { count: closed }), kept ? translate(language, "archive_not_closed", { count: kept }) : ""].filter(Boolean).join(" ");
+    const { saved = 0, closed = 0, kept = 0, internalClosed = 0 } = notice.params || {};
+    return [saved ? translate(language, "archive_saved", { count: saved }) : "", translate(language, "archive_closed", { count: closed }), internalClosed ? translate(language, "archive_internal_closed", { count: internalClosed }) : "", kept ? translate(language, "archive_not_closed", { count: kept }) : ""].filter(Boolean).join(" ");
   }
   return notice.key ? translate(language, notice.key, notice.params) : notice.text || "";
 }

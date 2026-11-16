@@ -6,7 +6,7 @@ import { cleanSettings, DEFAULT_SETTINGS, makeSession, parseOneTab, searchSessio
 
 test("English is the explicit default for fresh, legacy and invalid language settings", () => {
   assert.equal(DEFAULT_SETTINGS.language, "en");
-  assert.deepEqual(cleanSettings({ includePinned: true, scope: "current", theme: "light" }), { includePinned: true, scope: "current", theme: "light", language: "en", layout: "grid" });
+  assert.deepEqual(cleanSettings({ includePinned: true, scope: "current", theme: "light" }), { includePinned: true, closeInternalTabs: false, scope: "current", theme: "light", language: "en", layout: "grid" });
   for (const input of [undefined, null, "auto", "xx", "tr-TR", "__proto__", "constructor"]) {
     assert.equal(normalizeLanguage(input), "en");
     assert.equal(translate(input, "settings"), "Settings");
@@ -31,6 +31,14 @@ test("All five catalogs contain every English message and the same interpolation
       assert.ok(CATALOGS[code][key].trim(), `${code}.${key} is empty`);
       assert.deepEqual(fields(CATALOGS[code][key]), fields(CATALOGS.en[key]), `${code}.${key}`);
     }
+  }
+});
+
+test("Cleanup-only notices explain unsaved closes without claiming an empty session was saved", () => {
+  const notice = { key: "archive_summary", params: { saved: 0, closed: 2, kept: 0, internalClosed: 2 } };
+  for (const { code } of LANGUAGES) {
+    assert.equal(translateNotice(code, notice), `${translate(code, "archive_closed", { count: 2 })} ${translate(code, "archive_internal_closed", { count: 2 })}`);
+    assert.ok(translate(code, "close_internal_tabs_hint").length > 0);
   }
 });
 

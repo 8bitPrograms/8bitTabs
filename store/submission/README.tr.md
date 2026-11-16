@@ -1,4 +1,4 @@
-# 8bitTabs 1.2.1 — Chrome Web Store alanları
+# 8bitTabs 1.3.0 — Chrome Web Store alanları
 
 Bu rehber, gönderilen sekiz ekranın sırasını izler. Kutuların içindeki İngilizce metinleri ilgili alana yapıştır. Eklentinin varsayılan dili İngilizcedir.
 
@@ -20,6 +20,8 @@ Save your tabs. Clear your browser. Come back when you're ready.
 
 8bitTabs saves your open tabs into dated sessions and closes them with one click. Pinned tabs stay open by default; you can include them in Settings.
 
+Optional cleanup closes empty and internal tabs, including Vivaldi's Start Page, without adding them to the archive. It is off by default. Pinned-tab protection and window scope still apply.
+
 YOUR ARCHIVE, YOUR WAY
 • Search tab titles, URLs, session names, notes and folders.
 • Name sessions, add notes, star favorites and organize folders.
@@ -38,7 +40,7 @@ Choose English, Turkish, German, French or Spanish. Dark, light and system theme
 
 The toolbar icon saves and closes tabs. To browse your archive without closing anything, use Alt+Shift+O or right-click the extension and choose Options.
 
-Only URLs, titles and tab metadata are archived. Form data, page content, page navigation history and browser tab groups are not saved. Private windows and unsupported special pages are skipped.
+Only URLs, titles and tab metadata are archived. Form data, page content, page navigation history and browser tab groups are not saved. Private windows and third-party extension pages stay untouched.
 
 Open source under the GPL-3.0 license.
 ```
@@ -89,7 +91,7 @@ Save browser tabs into searchable local sessions, close the archived tabs, and r
 **tabs justification**
 
 ```text
-Read the URL, title, window order, pin and mute state of tabs selected by the user's archive action. Save a verified local copy before closing those tabs. No page content or browsing-history database is read.
+Read tab URLs, titles, window order, pin and mute state for the user's archive action. Ordinary tabs are saved and verified locally before closing. A separate, disabled-by-default setting closes empty and internal browser pages without archiving them, respecting pinned-tab and window settings. No page content or browsing-history database is read.
 ```
 
 **unlimitedStorage justification**
@@ -121,7 +123,7 @@ Username ve Password alanlarını **boş bırak**. Giriş, hesap, abonelik veya 
 **Additional instructions** — 500 karakter sınırına uygun:
 
 ```text
-No login or setup is required. Use a clean test profile. Open two normal web pages and pin one. Click the extension icon: unpinned tabs are saved in a dated session and closed; pinned tabs stay open. Search the archive and reopen a saved link. In Settings, enable Include pinned tabs and repeat. Export JSON, then import it to check backup merging. Press Alt+Shift+O or use the icon's right-click > Options to open the archive without closing tabs.
+No login is required. Use a clean test profile. Open a web page, a blank tab and a browser settings tab; pin another web page. Click the icon: normal tabs are saved and closed; pinned and internal tabs stay open. In Settings, enable Close empty and internal tabs too, then repeat: internal tabs close without being saved. Enable Archive pinned tabs too to include pinned tabs. Search and restore a session; export/import JSON to check backups. Alt+Shift+O opens the archive.
 ```
 
 ## 7. Distribution
@@ -135,7 +137,7 @@ No login or setup is required. Use a clean test profile. Open two normal web pag
 
 ## 8. Package
 
-Mağazadaki mevcut 1.2.0 taslağında **Upload new package** ile [8bitTabs-1.2.1-chromium.zip](https://github.com/8bitPrograms/8bitTabs/releases/download/v1.2.1/8bitTabs-1.2.1-chromium.zip) dosyasını yükle. Kaynak kod veya store-assets ZIP'ini eklenti paketi olarak yükleme. Sürüm 1.2.1, izinler yalnızca tabs ve unlimitedStorage olmalı.
+Mağaza panelindeki Package bölümünde **Upload new package** ile [8bitTabs-1.3.0-chromium.zip](https://github.com/8bitPrograms/8bitTabs/releases/download/v1.3.0/8bitTabs-1.3.0-chromium.zip) dosyasını yükle. Kaynak kod veya store-assets ZIP'ini eklenti paketi olarak yükleme. Sürüm 1.3.0, izinler yalnızca tabs ve unlimitedStorage olmalı.
 
 **Verified CRX uploads** isteğe bağlıdır. İmza anahtarını ve yedekleme sürecini ayrıca hazırlamadan Opt in yapma; bu seçenek etkinleştikten sonra güncellemelerin ilgili özel anahtarla imzalanması gerekir.
 

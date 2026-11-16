@@ -1,1 +1,1 @@
-Read the URL, title, window order, pin and mute state of tabs selected by the user's archive action. Save a verified local copy before closing those tabs. No page content or browsing-history database is read.
+Read tab URLs, titles, window order, pin and mute state for the user's archive action. Ordinary tabs are saved and verified locally before closing. A separate, disabled-by-default setting closes empty and internal browser pages without archiving them, respecting pinned-tab and window settings. No page content or browsing-history database is read.

@@ -1,6 +1,6 @@
 # 8bitTabs gizlilik bildirimi
 
-Sürüm 1.2.1 · 13 Kasım 2026
+Sürüm 1.3.0 · 16 Kasım 2026
 
 [English](PRIVACY.md)
 
@@ -13,6 +13,8 @@ Dil ve kart/liste görünümü tercihi cihazda saklanır. İngilizce, Türkçe, 
 Eklenti paketinde uzak kod ve üçüncü taraf çalıştırma bağımlılığı yoktur. İçerik güvenliği ilkesi eklenti sayfaları ve arka plan işlemcisinin ağ bağlantılarını `connect-src 'none'` ile engeller. Kullanıcı bir bağlantıyı geri açtığında, tarayıcının açtığı o web sayfası kendi olağan ağ bağlantılarını yapar. Bu bildirimin kapsamı diğer web sitelerinin ve tarayıcının davranışı değildir.
 
 Gizli pencereler desteklenmez ve arşivlenmez. Sayfaları arşivleme yalnızca kullanıcının araç çubuğundaki simgeye veya arşiv sayfasındaki düğmeye basmasıyla başlar. Periyodik tarama veya kendiliğinden arşivleme yapılmaz.
+
+**Boş ve dahili sekmeleri de kapat** seçeneği varsayılan olarak kapalıdır. Açılırsa, arşivleme sırasında boş ve dahili tarayıcı sayfaları adreslerinden tanınır ve arşive eklenmeden kapatılır. Sabitlenmiş sekme koruması ve pencere kapsamı geçerlidir. Temizlik tercihi ve tamamlanma sayaçları aynı yerel tarayıcı profilinde tutulur; yeni izin veya veri aktarımı eklenmez.
 
 Yerel kayıtlar ve indirilen JSON yedekleri 8bitTabs tarafından şifrelenmez. URL'ler sorgu parametrelerinde kişisel bilgiler veya erişim belirteçleri içerebilir. Cihaza, tarayıcı profiline veya yedek dosyalarına erişimi olan kişiler bu verileri okuyabilir. Yedeklerini paylaşmadan önce içeriğini gözden geçir.
 

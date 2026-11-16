@@ -172,3 +172,128 @@ test("Invalid import produces no partial additions", async () => {
   assert.equal(f.sessions.size, 0);
   assert.equal(f.folders.size, 0);
 });
+
+const browserTab = (id, url, values = {}) => ({ id, url, title: "Start Page", windowId: 1, pinned: false, index: id, ...values });
+const cleanupTabs = () => [
+  browserTab(20, "https://example.com/work"),
+  browserTab(21, "about:blank"),
+  browserTab(22, "vivaldi://startpage"),
+  browserTab(23, "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html"),
+  browserTab(24, "vivaldi://about", { pinned: true }),
+  browserTab(25, "chrome-extension://another/options.html", { pendingUrl: "https://example.com/leaving-extension" }),
+  browserTab(26, "chrome-extension://tabdock/manager.html"),
+  browserTab(27, "chrome://settings/", { windowId: 2 }),
+  browserTab(28, "vivaldi://startpage", { incognito: true }),
+  browserTab(29, ""),
+];
+
+test("Default archive leaves blank/internal pages open and archives real URLs regardless of their title", async () => {
+  const f = fixture({ initialTabs: cleanupTabs() });
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 1);
+  assert.equal(result.closed, 1);
+  assert.equal(result.internalClosed, 0);
+  assert.deepEqual(f.tabs.map((tab) => tab.id), [21, 22, 23, 24, 25, 26, 27, 28, 29]);
+  assert.deepEqual([...f.sessions.values()][0].tabs.map((tab) => tab.url), ["https://example.com/work"]);
+});
+
+test("Opt-in cleanup closes blank and Vivaldi/browser pages without archiving them or other extension pages", async () => {
+  const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: cleanupTabs() });
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 1);
+  assert.equal(result.closed, 5);
+  assert.equal(result.internalClosed, 4);
+  assert.deepEqual(f.tabs.map((tab) => tab.id), [24, 25, 26, 28, 29]);
+  const saved = [...f.sessions.values()][0];
+  assert.equal(saved.tabs.length, 1);
+  assert.equal(saved.tabs[0].url, "https://example.com/work");
+  assert.equal(saved.closedCount, 1);
+  assert.equal(saved.keptCount, 0);
+  assert.equal(f.meta.get("notice").params.internalClosed, 4);
+});
+
+test("Cleanup-only action opens the archive first and creates no empty session", async () => {
+  const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: [browserTab(21, "about:blank"), browserTab(22, "vivaldi://startpage")] });
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 0);
+  assert.equal(result.sessionId, undefined);
+  assert.equal(result.closed, 2);
+  assert.equal(result.internalClosed, 2);
+  assert.equal(f.sessions.size, 0);
+  assert.equal(f.events.includes("save"), false);
+  assert.ok(f.events.indexOf("create") < f.events.indexOf("remove:21"));
+  assert.equal(f.tabs.length, 1);
+  assert.equal(f.tabs[0].url, "chrome-extension://tabdock/manager.html");
+});
+
+test("Cleanup respects current-window scope and the separate pinned-tab opt-in", async () => {
+  for (const includePinned of [false, true]) {
+    const f = fixture({ settings: { closeInternalTabs: true, scope: "current", includePinned }, initialTabs: cleanupTabs() });
+    const result = await f.service.archive(1);
+    assert.equal(result.internalClosed, includePinned ? 4 : 3);
+    assert.equal(f.tabs.some((tab) => tab.id === 24), !includePinned);
+    for (const id of [25, 26, 27, 28, 29]) assert.ok(f.tabs.some((tab) => tab.id === id), `Preserve tab ${id}`);
+  }
+});
+
+test("A blank page navigating to a real URL is archived using its pending destination", async () => {
+  const f = fixture({ initialTabs: [browserTab(21, "about:blank", { pendingUrl: "https://example.com/loading" }), browserTab(26, "chrome-extension://tabdock/manager.html")] });
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 1);
+  assert.equal(result.internalClosed, 0);
+  assert.equal([...f.sessions.values()][0].tabs[0].url, "https://example.com/loading");
+});
+
+test("Cleanup never closes browser pages that navigate, move, change pin state or become private during archiving", async () => {
+  for (const change of [{ url: "https://example.com/new" }, { pendingUrl: "https://example.com/loading" }, { windowId: 42 }, { pinned: true }, { incognito: true }, { url: "chrome-extension://tabdock/manager.html", pendingUrl: "vivaldi://startpage" }, { url: "chrome-extension://another/options.html", pendingUrl: "vivaldi://startpage" }]) {
+    const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: [browserTab(20, "https://example.com/work"), browserTab(22, "vivaldi://startpage"), browserTab(26, "chrome-extension://tabdock/manager.html")] });
+    const get = f.api.tabs.get;
+    f.api.tabs.get = async (id) => ({ ...await get(id), ...(id === 22 ? change : {}) });
+    const result = await f.service.archive(1);
+    assert.ok(f.tabs.some((tab) => tab.id === 22));
+    assert.equal(result.kept, 1);
+    assert.equal(result.internalClosed, 0);
+    assert.equal([...f.sessions.values()][0].keptCount, 0);
+  }
+});
+
+test("Failed save or verification also prevents optional internal-page cleanup", async () => {
+  for (const failure of ["save", "verify"]) {
+    const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: cleanupTabs() });
+    if (failure === "save") f.db.addSession = async () => { throw new Error("Disk full"); };
+    else f.db.getSession = async () => undefined;
+    await assert.rejects(f.service.archive(1));
+    assert.equal(f.tabs.length, 10);
+    assert.equal(f.events.some((event) => event.startsWith("remove:")), false);
+  }
+});
+
+test("Cleanup-only action leaves every page open if the archive cannot be reached", async () => {
+  const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: [browserTab(21, "about:blank"), browserTab(26, "chrome-extension://tabdock/manager.html")] });
+  f.api.tabs.update = async () => { throw new Error("Window unavailable"); };
+  await assert.rejects(f.service.archive(1));
+  assert.equal(f.tabs.length, 2);
+  assert.equal(f.sessions.size, 0);
+});
+
+test("Failed internal-page close is reported without altering saved-session close counts", async () => {
+  const f = fixture({ settings: { closeInternalTabs: true }, initialTabs: [browserTab(20, "https://example.com/work"), browserTab(21, "about:blank"), browserTab(26, "chrome-extension://tabdock/manager.html")] });
+  const remove = f.api.tabs.remove;
+  f.api.tabs.remove = async (id) => { if (id === 21) throw new Error("Close blocked"); return remove(id); };
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 1);
+  assert.equal(result.closed, 1);
+  assert.equal(result.kept, 1);
+  assert.equal(result.internalClosed, 0);
+  assert.ok(f.tabs.some((tab) => tab.id === 21));
+  assert.equal([...f.sessions.values()][0].closedCount, 1);
+  assert.equal([...f.sessions.values()][0].keptCount, 0);
+});
+
+test("Vivaldi application shell URLs remain protected even when internal and pinned cleanup are enabled", async () => {
+  const f = fixture({ settings: { closeInternalTabs: true, includePinned: true }, initialTabs: [browserTab(21, "about:blank"), browserTab(30, "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/main.html"), browserTab(31, "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/window.html"), browserTab(26, "chrome-extension://tabdock/manager.html")] });
+  const result = await f.service.archive(1);
+  assert.equal(result.saved, 0);
+  assert.equal(result.internalClosed, 1);
+  assert.deepEqual(f.tabs.map((tab) => tab.id), [30, 31, 26]);
+});

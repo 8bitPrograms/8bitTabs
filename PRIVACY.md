@@ -1,6 +1,6 @@
 # 8bitTabs privacy policy
 
-Version 1.2.1 · 13 November 2026
+Version 1.3.0 · 16 November 2026
 
 [Türkçe](PRIVACY.tr.md)
 
@@ -11,6 +11,8 @@ Version 1.2.1 · 13 November 2026
 When you choose to archive tabs, the extension reads their URLs, titles, window/tab order, pin state, and mute state. It stores these records in IndexedDB in the current browser profile, together with session timestamps, names, notes, folders, favorites, Trash state, and your appearance/language/archiving preferences.
 
 The extension reads a backup or OneTab text file only when you choose that file for import. It creates a local JSON download only when you request an export.
+
+The optional **Close empty and internal tabs too** setting is disabled by default. When enabled, the archive action identifies empty and internal browser pages by their URLs and closes them without adding those pages to the saved archive. Pinned-tab protection and window scope still apply. The cleanup preference and completion counts stay in the same local browser profile; no new permission or data transmission is introduced.
 
 There are no content scripts. The extension does not read page content, form fields, passwords, cookies, authentication sessions, file contents behind archived file URLs, or the browser's browsing-history database. Private windows are not supported or archived.
 
@@ -38,6 +40,6 @@ The `unlimitedStorage` permission avoids the normal storage quota and eviction l
 
 ## Changes and contact
 
-This policy describes the source code distributed in version 1.2.1. A future release that changes data handling must update this policy and its store declarations. The project is distributed under the [GNU General Public License v3.0](LICENSE).
+This policy describes the source code distributed in version 1.3.0. A future release that changes data handling must update this policy and its store declarations. The project is distributed under the [GNU General Public License v3.0](LICENSE).
 
 8bitTabs is maintained by 8bitPrograms. The public source is available at [8bitPrograms/8bitTabs](https://github.com/8bitPrograms/8bitTabs). For support or questions about this policy, use the [project issue tracker](https://github.com/8bitPrograms/8bitTabs/issues). Do not include private URLs, credentials, or backups containing personal data in public issues.

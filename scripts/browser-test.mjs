@@ -8,6 +8,7 @@ import { CATALOGS, LANGUAGES, localeFor, translate, translateNotice } from "../e
 
 const { chromium } = devRequire("playwright");
 const root = fileURLToPath(new URL("../", import.meta.url));
+const expectedManifest = JSON.parse(await readFile(path.join(root, "extension", "manifest.json"), "utf8"));
 const output = path.join(root, "test-results");
 await mkdir(output, { recursive: true });
 const profile = await mkdtemp(path.join(output, "profile-"));
@@ -75,8 +76,10 @@ try {
     assert.equal(manifest.host_permissions, undefined);
     assert.equal(manifest.action.default_popup, undefined);
     assert.equal((await send("snapshot")).settings.includePinned, false);
+    assert.equal((await send("snapshot")).settings.closeInternalTabs, false);
     assert.equal((await send("snapshot")).settings.language, "en");
     assert.equal(manifest.name, "8bitTabs — Private Tab Archive");
+    assert.equal(manifest.version, expectedManifest.version);
     assert.equal(manifest.default_locale, "en");
     assert.equal(await page.locator("html").getAttribute("lang"), "en");
     assert.equal(await page.locator("#settings-button").innerText(), "Settings");
@@ -339,6 +342,69 @@ try {
     await send("session:delete", { id: session.id });
   });
 
+  const beforeCleanup = await send("snapshot");
+  let cleanupFixture;
+  await check("Empty/internal pages stay open by default while ordinary tabs are archived", async () => {
+    await send("settings", { value: { ...beforeCleanup.settings, scope: "current", includePinned: false, closeInternalTabs: false } });
+    cleanupFixture = await page.evaluate(async (base) => {
+      const own = await chrome.tabs.getCurrent();
+      const root = chrome.runtime.getURL("");
+      for (const tab of await chrome.tabs.query({ windowId: own.windowId })) if (tab.id !== own.id && !tab.url?.startsWith(root)) await chrome.tabs.remove(tab.id);
+      const internal = [];
+      for (const url of ["about:blank", "chrome://newtab/", "chrome://settings/", "chrome://version/"]) internal.push((await chrome.tabs.create({ url, windowId: own.windowId, active: false })).id);
+      const pinned = await chrome.tabs.create({ url: "chrome://newtab/", windowId: own.windowId, pinned: true, active: false });
+      const normal = await chrome.tabs.create({ url: base + "/cleanup?title=CleanupFixture", windowId: own.windowId, active: false });
+      const outside = await chrome.windows.create({ url: "chrome://settings/", focused: false });
+      return { internal, pinned: pinned.id, normal: normal.id, outside: outside.id, outsideTab: outside.tabs[0].id, manager: own.id };
+    }, base);
+    const result = await send("archive");
+    assert.equal(result.saved, 1);
+    assert.equal(result.internalClosed, 0);
+    const tabs = await page.evaluate(() => chrome.tabs.query({}));
+    assert.ok(!tabs.some((tab) => tab.id === cleanupFixture.normal));
+    for (const id of [...cleanupFixture.internal, cleanupFixture.pinned, cleanupFixture.outsideTab, cleanupFixture.manager]) assert.ok(tabs.some((tab) => tab.id === id), `Keep internal/pinned/manager tab ${id}`);
+  });
+
+  await check("Settings opt-in closes internal pages without archiving them and preserves scope/pinned tabs", async () => {
+    await page.locator("#settings-button").click();
+    assert.equal(await page.locator("#close-internal-tabs").isChecked(), false);
+    await page.locator("#close-internal-tabs").check();
+    await page.locator("#settings-form button[type=submit]").click();
+    await page.locator("#settings-dialog").waitFor({ state: "hidden" });
+    await page.reload();
+    await page.waitForFunction(() => document.querySelector("#view-description").textContent.includes(" · "));
+    await page.locator("#settings-button").click();
+    assert.equal(await page.locator("#close-internal-tabs").isChecked(), true);
+    await page.locator("#settings-dialog .icon-button[data-close]").click();
+    const before = await send("snapshot");
+    const result = await send("archive");
+    assert.equal(result.saved, 0);
+    assert.equal(result.internalClosed, cleanupFixture.internal.length);
+    assert.equal(result.closed, cleanupFixture.internal.length);
+    assert.deepEqual((await send("snapshot")).sessions, before.sessions);
+    const tabs = await page.evaluate(() => chrome.tabs.query({}));
+    for (const id of cleanupFixture.internal) assert.ok(!tabs.some((tab) => tab.id === id), `Close internal tab ${id}`);
+    for (const id of [cleanupFixture.pinned, cleanupFixture.outsideTab, cleanupFixture.manager]) assert.ok(tabs.some((tab) => tab.id === id), `Keep excluded tab ${id}`);
+  });
+
+  await check("Pinned-page cleanup requires its separate opt-in and cleanup preference survives a restart", async () => {
+    await page.locator("#settings-button").click();
+    await page.locator("#include-pinned").check();
+    await page.locator("#settings-form button[type=submit]").click();
+    await page.locator("#settings-dialog").waitFor({ state: "hidden" });
+    const result = await send("archive");
+    assert.equal(result.saved, 0);
+    assert.equal(result.internalClosed, 1);
+    const tabs = await page.evaluate(() => chrome.tabs.query({}));
+    assert.ok(!tabs.some((tab) => tab.id === cleanupFixture.pinned));
+    assert.ok(tabs.some((tab) => tab.id === cleanupFixture.outsideTab));
+    await page.evaluate((id) => chrome.windows.remove(id), cleanupFixture.outside);
+    await context.close();
+    await launch();
+    assert.equal((await send("snapshot")).settings.closeInternalTabs, true);
+    await send("settings", { value: beforeCleanup.settings });
+  });
+
   const beforeLanguages = await send("snapshot");
   for (const { code } of LANGUAGES) {
     await check(`Language ${code}: saved UI selection, labels, dates, errors, toolbar and responsive layout`, async () => {
@@ -373,12 +439,17 @@ try {
       await page.locator("#backup-dialog [data-close]").click();
       await page.locator("#toast").evaluate((node) => { node.hidden = true; });
 
-      for (const width of [1440, 768, 390]) {
-        await page.setViewportSize({ width, height: 1000 });
+      for (const [width, height] of [[1440, 1000], [1280, 800], [768, 1000], [390, 1000]]) {
+        await page.setViewportSize({ width, height });
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, `${code}: overflow at ${width}`);
         await page.locator("#settings-button").click();
         assert.equal(await page.locator("#language").inputValue(), code);
         assert.equal(await page.locator("#settings-dialog").evaluate((dialog) => dialog.scrollWidth > dialog.clientWidth), false, `${code}: dialog overflow at ${width}`);
+        if (width === 1280) {
+          const save = await page.locator("#settings-form button[type=submit]").boundingBox();
+          const dialog = await page.locator("#settings-dialog").boundingBox();
+          assert.ok(save && dialog && save.y >= dialog.y && save.y + save.height <= dialog.y + dialog.height && save.y + save.height <= height, `${code}: settings save button must fit at 1280×800`);
+        }
         if (width === 390) await page.screenshot({ path: path.join(output, `settings-${code}-mobile.png`) });
         await page.locator("#settings-dialog .icon-button[data-close]").click();
       }
@@ -415,7 +486,7 @@ try {
     await page.reload();
     await page.waitForFunction(() => document.documentElement.lang === "en" && document.querySelector("#view-description").textContent.includes(" · "));
     const after = await send("snapshot");
-    assert.deepEqual(after.settings, { includePinned: true, scope: "current", theme: "light", language: "en", layout: "grid" });
+    assert.deepEqual(after.settings, { includePinned: true, closeInternalTabs: false, scope: "current", theme: "light", language: "en", layout: "grid" });
     assert.deepEqual(after.sessions, before.sessions);
     assert.equal(after.notice, null);
     assert.equal(await page.locator("#notice").isVisible(), false);
@@ -450,7 +521,7 @@ try {
   await page.setViewportSize({ width: 390, height: 1000 });
   await page.screenshot({ path: path.join(output, "preview-mobile.png"), fullPage: true });
   assert.deepEqual(errors, [], `Unexpected JavaScript errors: ${errors.join("; ")}`);
-  await writeFile(path.join(output, "browser-report.json"), JSON.stringify({ passed: checks.length, checks, errors, browser: context.browser()?.version(), profile, testedAt: new Date().toISOString() }, null, 2));
+  await writeFile(path.join(output, "browser-report.json"), JSON.stringify({ passed: checks.length, checks, errors, browser: context.browser()?.version(), extensionVersion: expectedManifest.version, profile, testedAt: new Date().toISOString() }, null, 2));
   console.log(`\n${checks.length} browser checks passed. Screenshots and report: ${output}`);
 } catch (error) {
   if (page && !page.isClosed()) await page.screenshot({ path: path.join(output, "failure.png"), fullPage: true }).catch(() => {});

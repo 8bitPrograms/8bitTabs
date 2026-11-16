@@ -1,6 +1,6 @@
 import { LocalizedError, localeFor, normalizeLanguage, translate } from "./i18n.js";
 
-export const DEFAULT_SETTINGS = Object.freeze({ includePinned: false, scope: "all", theme: "dark", language: "en", layout: "grid" });
+export const DEFAULT_SETTINGS = Object.freeze({ includePinned: false, closeInternalTabs: false, scope: "all", theme: "dark", language: "en", layout: "grid" });
 export const BACKUP_FORMAT = "8bittabs-backup";
 export const LEGACY_BACKUP_FORMAT = "tabdock-backup";
 export const BACKUP_VERSION = 1;
@@ -13,11 +13,23 @@ export function cleanSettings(value = {}) {
   value ??= {};
   return {
     includePinned: value.includePinned === true,
+    closeInternalTabs: value.closeInternalTabs === true,
     scope: value.scope === "current" ? "current" : "all",
     theme: ["light", "system"].includes(value.theme) ? value.theme : "dark",
     language: normalizeLanguage(value.language),
     layout: value.layout === "list" ? "list" : "grid",
   };
+}
+
+// Recognize Vivaldi's tab pages, never its application shell or other extensions.
+const VIVALDI_UI_ID = "mpognobbkildjkofajifpdfhcoklimli";
+export function isBlankOrInternalUrl(value) {
+  if (typeof value !== "string" || !value || value.length > 32768 || /[\u0000-\u0020\u007f]/u.test(value)) return false;
+  try {
+    const url = new URL(value);
+    return INTERNAL_SCHEMES.has(url.protocol) || ["about:", "chrome-search:", "chrome-native:"].includes(url.protocol)
+      || (url.protocol === "chrome-extension:" && url.hostname === VIVALDI_UI_ID && url.pathname.startsWith("/components/"));
+  } catch { return false; }
 }
 
 // No executable URLs, temporary blob URLs, browser debug/crash pages or other extensions.

@@ -17,11 +17,11 @@ Bu bilgisayarda kurulum için seçilecek dosya değil, `manifest.json` dosyasın
 
 ## ZIP paketinden
 
-1. `8bitTabs-1.2.1-chromium.zip` dosyasını kalıcı bir klasöre çıkar.
+1. `8bitTabs-1.3.0-chromium.zip` dosyasını kalıcı bir klasöre çıkar.
 2. Yukarıdaki eklentiler sayfasında, ZIP'ten çıkan ve `manifest.json` içeren klasörü yükle.
 3. Yüklediğin klasörü taşıma veya silme; tarayıcı eklenti dosyalarını oradan okur.
 
-`8bitTabs-1.2.1-source.zip` geliştirici kaynakları, testler ve belgeleri de içerir. Bu paketi açtıysan yüklemek için içindeki `extension` alt klasörünü seç.
+`8bitTabs-1.3.0-source.zip` geliştirici kaynakları, testler ve belgeleri de içerir. Bu paketi açtıysan yüklemek için içindeki `extension` alt klasörünü seç.
 
 ## İlk kullanım
 
@@ -42,6 +42,8 @@ Arşiv bir adres listesidir. Form verileri ve sayfa geçmişi saklanmaz. Eklenti
 1.1.0 güncellemesi mevcut arşivi, oturum adlarını, notları ve sabitlenmiş sekme ayarını korur. Önceki sürümde dil seçimi bulunmadığından arayüz İngilizce açılır; Türkçe ayarlardan seçilebilir.
 
 1.2.0 sürümü 8bitTabs adını ve Pixel Core tasarımını getirir. Üst araç çubuğundan kart veya liste görünümünü seçebilirsin. Eski `tabdock-backup` yedekleri içe alınır; yeni yedekler `8bittabs-backup` biçiminde oluşturulur. Aynı kaynak dizininden yüklediysen eklentiler sayfasından Yeniden yükle'ye bas. Farklı dizine veya mağaza sürümüne geçerken önce JSON yedeği al ve yeni kurulumda içe aktar.
+
+1.3.0 ile **Ayarlar → Boş ve dahili sekmeleri de kapat** seçeneği eklendi. Yeni kurulumda ve güncellemeden sonra kapalıdır. Açılırsa arşivleme sırasında bu sekmeler arşive alınmadan kapatılır; sabitlenmiş sekme koruması ve pencere kapsamı geçerlidir. Mağaza kurulumunda aynı eklentiye güncelleme yüklemek mevcut arşivi korur.
 
 ## Kaldırma
 

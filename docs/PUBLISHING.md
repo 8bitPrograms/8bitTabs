@@ -1,6 +1,6 @@
 # Publishing 8bitTabs
 
-Version 1.2.1 is prepared for the public [8bitPrograms/8bitTabs repository](https://github.com/8bitPrograms/8bitTabs). The repository's existing GNU GPL v3.0 license is preserved. Chrome Web Store submission is performed separately by the publisher.
+Version 1.3.0 is prepared for the public [8bitPrograms/8bitTabs repository](https://github.com/8bitPrograms/8bitTabs). The repository's existing GNU GPL v3.0 license is preserved. Chrome Web Store submission is performed separately by the publisher.
 
 ## Repository and public URLs
 
@@ -15,12 +15,12 @@ Keep private tab URLs, real user backups, credentials, signing keys, browser pro
 
 Run `npm run icons`, `npm run test:browser`, `npm run store`, `npm run submission`, then `npm run package`. The browser script uses an isolated test profile. `npm run submission` generates five description text files, individual permission/review text files, a Turkish field-by-field guide, and a local copy-button helper from `store/listing.json`.
 
-- `dist/8bitTabs-1.2.1-chromium.zip`: the Chrome Web Store upload; `manifest.json` is at the root.
-- `dist/8bitTabs-1.2.1-source.zip`: matching readable source, tests, documentation and store files.
-- `dist/8bitTabs-1.2.1-store-assets.zip`: icon, screenshots, promo images and the form-filling guide.
+- `dist/8bitTabs-1.3.0-chromium.zip`: the Chrome Web Store upload; `manifest.json` is at the root.
+- `dist/8bitTabs-1.3.0-source.zip`: matching readable source, tests, documentation and store files.
+- `dist/8bitTabs-1.3.0-store-assets.zip`: icon, screenshots, promo images and the form-filling guide.
 - `dist/SHA256SUMS.txt`: checksums for all three packages.
 
-Attach these files to the matching GitHub version release. The store draft previously contained version 1.2.0; upload the final 1.2.1 Chromium ZIP through **Upload new package**.
+Attach these files to the matching GitHub version release. To update the existing store item, upload the 1.3.0 Chromium ZIP through **Upload new package** and submit the update for review.
 
 ## Complete the store form
 
@@ -29,6 +29,8 @@ Follow [the Turkish field guide](../store/submission/README.tr.md), or open `sto
 Declare **Web history** because URLs, titles and archive timestamps are handled locally. Leave the other data-type boxes unchecked for this version's actual features. Confirm all three data-use certifications. Select **No remote code**. These declarations match the privacy policy and runtime: there are no account services, analytics, content scripts, page-content access, or developer-operated network connections.
 
 Use **Workflow & Planning**, **Free of charge**, **Public**, and **All regions** for the intended release. Leave the optional official verified-domain URL and videos blank. GitHub is the homepage/support host; it is not a domain owned by this publisher. Optional Verified CRX Uploads needs a separate signing-key and recovery process before opting in.
+
+Version 1.3.0 adds disabled-by-default empty/internal tab cleanup. Update the listing description and permission justification from the generated submission guide. It closes those pages without archiving them and retains the existing pinned-tab/window safeguards. No new permission or network access is added.
 
 The publisher completes the account's verified contact email and trader/non-trader declaration. Account-specific details are not stored in this project.
 

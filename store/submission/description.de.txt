@@ -2,6 +2,8 @@ Tabs speichern. Platz schaffen. Später zurückkehren.
 
 8bitTabs speichert offene Tabs mit einem Klick in datierten Sitzungen und schließt sie. Angeheftete Tabs bleiben standardmäßig offen und können in den Einstellungen eingeschlossen werden.
 
+Die optionale Bereinigung schließt leere und interne Tabs, einschließlich Vivaldis Startseite, ohne sie zu archivieren. Sie ist standardmäßig deaktiviert. Der Schutz angehefteter Tabs und der Fensterbereich gelten weiterhin.
+
 Durchsuche Titel, URLs, Sitzungen, Notizen und Ordner. Benenne Sitzungen, füge Notizen hinzu und markiere Favoriten. Wechsle zwischen Karten- und Listenansicht. Öffne einzelne Links, ganze Sitzungen oder die ursprüngliche Fensteraufteilung. Die Archivkopie bleibt erhalten. Gelöschte Sitzungen können aus dem Papierkorb wiederhergestellt werden.
 
 Alles bleibt lokal. Kein Konto, keine Cloud-Synchronisierung, keine Analyse, keine Werbung, kein entfernter Code und kein externer Favicon-Dienst. Erst nach dem Speichern und Überprüfen werden Tabs geschlossen. Seiteninhalte und die Browser-Verlaufsdatenbank werden nicht gelesen.
@@ -12,6 +14,6 @@ Englisch ist die Standardsprache. Türkisch, Deutsch, Französisch und Spanisch 
 
 Das Symbol speichert und schließt Tabs. Alt+Shift+O oder Rechtsklick auf das Symbol → Optionen öffnet nur das Archiv.
 
-Formulardaten, Seiteninhalte, der Navigationsverlauf und Browser-Tabgruppen werden nicht gespeichert. Private Fenster und nicht unterstützte Spezialseiten werden ausgelassen.
+Formulardaten, Seiteninhalte, der Navigationsverlauf und Browser-Tabgruppen werden nicht gespeichert. Private Fenster und Seiten anderer Erweiterungen bleiben unberührt.
 
 Open Source unter der GPL-3.0-Lizenz.

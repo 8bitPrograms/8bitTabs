@@ -1,10 +1,10 @@
-# 8bitTabs 1.2.1 doğrulama notları
+# 8bitTabs 1.3.0 doğrulama notları
 
-Tarih: 13 Kasım 2026. Ortam: Windows, Node.js 24.22.1, Playwright 1.62.1, Brave'in Chromium 157.0.8103.79 motoru. Testler kullanıcının kişisel profili yerine proje altında oluşturulan ayrı test profillerinde yapıldı.
+Tarih: 16 Kasım 2026. Ortam: Windows, Node.js 24.22.1, Playwright 1.62.1, Brave'in Chromium 157.0.8103.79 motoru. Testler kullanıcının kişisel profili yerine proje altında oluşturulan ayrı test profillerinde yapıldı.
 
 ## Temel kontroller
 
-34 otomatik kontrol geçti. Önceki 24 davranış kontrolü ve 8 dil kontrolü yeniden çalıştırıldı; yeni yedek adı/eski yedek uyumluluğu ve kart/liste tercihi için 2 kontrol eklendi:
+47 otomatik kontrol geçti. Önceki 34 kontrolün yanında boş/dahili sekme sınıflandırması, kapalı varsayılan, eski ayarların yükseltilmesi, bildirimler ve güvenli kapatma için 13 kontrol eklendi:
 
 - Varsayılan sabitlenmiş sekme koruması ve tüm pencereler kapsamı.
 - Güvenli URL politikası, Türkçe/aksansız arama ve oturum/sekme bağlamının birleşmesi.
@@ -31,7 +31,7 @@ Tarih: 13 Kasım 2026. Ortam: Windows, Node.js 24.22.1, Playwright 1.62.1, Brave
 
 ## Gerçek tarayıcı kontrolleri
 
-25 senaryo geçti. Tarayıcı dili özellikle Türkçe seçildi; eklentinin İngilizce varsayılanı ayrıca doğrulandı:
+28 senaryo geçti. Tarayıcı dili özellikle Türkçe seçildi; eklentinin İngilizce varsayılanı ayrıca doğrulandı:
 
 1. MV3 eklentinin gerçek tarayıcıda yüklenmesi; yalnızca `tabs` ve `unlimitedStorage` izinleri; içerik betiği, host izni ve popup bulunmaması.
 2. Gerçek iki penceredeki sekmelerin arşiv ekranındaki düğmeyle kaydedilip kapatılması; sabitlenmiş sekmenin açık kalması.
@@ -59,7 +59,11 @@ Tarih: 13 Kasım 2026. Ortam: Windows, Node.js 24.22.1, Playwright 1.62.1, Brave
 24. Kart/liste geçişinin gerçek arayüzden yapılması ve yeniden yükleyince korunması; üstteki arşiv toplamlarının arama sonuçlarına göre değişmemesi; masaüstünde iki kart sütununun oluşması.
 25. Önceki geliştirme sürümünün yedeğinin yeni adla çalışan eklentiye aktarılması; kullanıcının eski adı içeren başlığının aynen korunması.
 
-Her dilde geçersiz OneTab dosyası gerçek dosya seçiciden alındı; hata mesajının aynı dilde ve açık iletişim kutusunun önünde görünmesi doğrulandı. Dil değişiklikleri sırasında kayıtlı oturumlar değiştirilmeden kaldı. Fransızca ve İspanyolca gibi daha uzun metinler dar ekranda da yatay taşma oluşturmadı.
+26. Gerçek boş/yeni sekme, Ayarlar ve Sürüm sekmelerinin varsayılan ayarda açık kalması; normal web sekmesinin arşivlenmesi.
+27. Yeni ayarın arayüzden açılması ve yeniden yüklemede korunması; dahili sekmelerin boş oturum oluşturmadan kapatılması, sabitlenmiş sekme ile kapsam dışı pencerenin korunması.
+28. Sabitlenmiş dahili sekmenin ancak iki seçenek birlikte açıkken kapatılması ve yeni tercihin tam tarayıcı yeniden başlatmasından sonra korunması.
+
+Her dilde geçersiz OneTab dosyası gerçek dosya seçiciden alındı; hata mesajının aynı dilde ve açık iletişim kutusunun önünde görünmesi doğrulandı. Dil değişiklikleri sırasında kayıtlı oturumlar değiştirilmeden kaldı. Fransızca ve İspanyolca gibi daha uzun metinler dar ekranda da yatay taşma oluşturmadı. Yeni temizlik ayarı ve açıklaması beş dildeki gerçek ayar penceresine dahildir. 1280×800 görünümde beş dilin tamamında Ayarları kaydet düğmesinin pencerenin içinde görünmesi ayrıca doğrulandı.
 
 İndirme kontrolü ilk çalıştırmada çalışma ortamının dosya izinlerine takıldı; ayrı test profiliyle dosya yazma izni sağlanınca JSON dosyası indirme ve tekrar yükleme kontrolü geçti. Test için eklentiye yeni bir izin eklenmedi.
 
@@ -69,9 +73,9 @@ Her dilde geçersiz OneTab dosyası gerçek dosya seçiciden alındı; hata mesa
 
 Pixel Core simgesi; koyu, açık ve mobil görünümler; uzun Almanca/Fransızca/İspanyolca metinlerin iletişim kutuları görsel olarak incelendi. Mağaza için kullanılan üç 1280×800 görüntü gerçek tarayıcı ekranından alındı. İsteğe bağlı tanıtım görselleri aynı kaynak SVG ve renklerle yerelde üretildi.
 
-Onaylanan sade piksel arşiv kutusu simgesi uygulandı. Kaynak SVG'nin onaylı önizlemeyle birebir eşleşmesi ve 16, 32, 48 ve 512 piksel çıktılarda aynı piksel ızgarasının korunması doğrulandı. 128 piksel mağaza simgesinin 16 piksel saydam kenar boşluğu kontrol edildi. Ekran görüntüleri, tanıtım görselleri ve dağıtım paketleri bu simgeyle yeniden üretildi; 34 temel ve 25 gerçek tarayıcı kontrolü tekrar geçti.
+Onaylanan sade piksel arşiv kutusu simgesi korundu. Kaynak SVG'nin onaylı önizlemeyle birebir eşleşmesi ve 16, 32, 48 ve 512 piksel çıktılarda aynı piksel ızgarasının korunması doğrulandı. 128 piksel mağaza simgesinin 16 piksel saydam kenar boşluğu kontrol edildi. Ekran görüntüleri ve paketler 1.3.0 arayüzüyle yeniden üretildi; 47 temel ve 28 gerçek tarayıcı kontrolü geçti.
 
-1.2.1 yayını için mevcut GitHub deposunun GPL-3.0 lisansı korundu; kaynak, destek ve gizlilik bağlantıları depoya bağlandı. Mağaza ekran ve tanıtım PNG'leri üç kanallı RGB biçimine dönüştürüldü; yalnızca mağaza simgesinin saydam kenar boşluğu korundu. Sekiz ekranı izleyen mağaza rehberindeki metinlerin karakter sınırları, beş dil seçimi, kopyalama düğmeleri ve dar ekran görünümü kontrol edildi. Bu yardımcı sayfanın tarayıcıda açılması, eklentinin ayrıca Google Chrome'da test edildiği anlamına gelmez.
+Mevcut GitHub deposunun GPL-3.0 lisansı, kaynak, destek ve gizlilik bağlantıları korundu. Mağaza ekran ve tanıtım PNG'leri üç kanallı RGB biçimindedir; yalnızca mağaza simgesinin saydam kenar boşluğu vardır. Sekiz ekranı izleyen mağaza rehberinin açıklamaları ve izin gerekçesi yeni davranışa uyarlandı; metinlerin karakter sınırları doğrulandı. Yardımcı sayfanın beş dil seçimi, kopyalama düğmeleri ve dar ekran görünümü Google Chrome'da ayrıca kontrol edildi; bu, eklentinin ayrıca Google Chrome'da test edildiği anlamına gelmez.
 
 Paketlerin ZIP CRC kontrolü, iç dosyaların kaynak dosyalarla SHA-256 karşılaştırması, tekil/güvenli arşiv yolları, manifest sürümü ve izinleri bağımsız bir ZIP okuyucusuyla doğrulandı. Aynı kaynaktan iki paketleme çalışmasının aynı dosya özetlerini üretmesi kontrol edildi. Bu kontroller mağaza incelemesinin yerini tutmaz.
 
@@ -80,3 +84,5 @@ Paketlerin ZIP CRC kontrolü, iç dosyaların kaynak dosyalarla SHA-256 karşıl
 Arşiv ekranındaki gerçek düğme ve araç çubuğunun gerçek olay işleyicisi ayrı ayrı çalıştırıldı. Araç çubuğu olayı DevTools ile tetiklendi; kişisel tarayıcı araç çubuğundaki simge fiziksel olarak tıklanmadı. Chrome ve Edge için ayrıca ayrı çalıştırma yapılmadı. Chromium 120 alt sınırında ayrıca test yapılmadı.
 
 Fiziksel güç kesintisi, gerçek disk doluluğu/bozulması, 100.000 sekmeli aktarım yük testi ve tüm kurumsal tarayıcı politikaları denenmedi. Temel kontrollerde depolama ve API hataları taklit edildi; bu, gerçek güç kaybı veya disk arızası kanıtı değildir.
+
+Vivaldi 8.3.4191.44 (Chromium 156.0.8078.104) ayrı deneme profillerinde başlatıldı. Yerel otomasyon bağlantısı ve başlatma akışı tam arayüz testinin tamamlanmasına izin vermedi; bu denemeler başarılı Vivaldi doğrulaması olarak sayılmadı. Vivaldi Start Page/Ayarlar adresleri ve yerleşik UI bileşen adresleri temel kontrollerde kapsanır. Tarayıcının kendi ana pencere/uygulama adresleri kapatma kapsamına alınmaz. Gerçek Vivaldi arayüzündeki son kullanım kontrolü ayrıca yapılmalıdır.

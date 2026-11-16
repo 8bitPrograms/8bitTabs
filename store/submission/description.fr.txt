@@ -2,6 +2,8 @@ Enregistrez vos onglets. Faites de la place. Revenez quand vous le souhaitez.
 
 8bitTabs enregistre les onglets ouverts dans des sessions datées et les ferme en un clic. Les onglets épinglés restent ouverts par défaut ; vous pouvez les inclure dans les paramètres.
 
+Le nettoyage facultatif ferme les onglets vides et internes, y compris la page d’accueil de Vivaldi, sans les archiver. Il est désactivé par défaut. La protection des onglets épinglés et la portée des fenêtres restent applicables.
+
 Recherchez parmi les titres, URL, sessions, notes et dossiers. Nommez vos sessions, ajoutez des notes et des favoris. Choisissez les cartes ou la liste. Rouvrez un lien, une session entière ou la répartition initiale des fenêtres. La copie archivée est conservée. Les sessions supprimées peuvent être récupérées dans la corbeille.
 
 Tout reste local : sans compte, synchronisation cloud, analyse, publicité, code distant ni service externe d'icônes. Les onglets ne sont fermés qu'après enregistrement et vérification. Le contenu des pages et la base de l'historique du navigateur ne sont pas lus.
@@ -12,6 +14,6 @@ L'anglais est la langue par défaut. Le turc, l'allemand, le français et l'espa
 
 L'icône enregistre et ferme les onglets. Pour consulter uniquement les archives, utilisez Alt+Shift+O ou le menu contextuel de l'extension → Options.
 
-Les formulaires, le contenu des pages, l'historique de navigation des onglets et les groupes d'onglets ne sont pas enregistrés. Les fenêtres privées et les pages spéciales non prises en charge sont ignorées.
+Les formulaires, le contenu des pages, l'historique de navigation des onglets et les groupes d'onglets ne sont pas enregistrés. Les fenêtres privées et les pages d’autres extensions restent inchangées.
 
 Code ouvert sous licence GPL-3.0.

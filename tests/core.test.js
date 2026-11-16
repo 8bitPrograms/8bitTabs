@@ -1,15 +1,26 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { BACKUP_FORMAT, cleanSettings, DEFAULT_SETTINGS, fold, isRestorableUrl, makeBackup, makeSession, parseOneTab, searchSession, validateBackup } from "../extension/core.js";
+import { BACKUP_FORMAT, cleanSettings, DEFAULT_SETTINGS, fold, isBlankOrInternalUrl, isRestorableUrl, makeBackup, makeSession, parseOneTab, searchSession, validateBackup } from "../extension/core.js";
 
 const makeTab = (id = 1, values = {}) => ({ id, url: `https://example.com/${id}`, title: `Tab ${id}`, pinned: false, active: id === 1, index: id - 1, windowId: 1, ...values });
 const session = () => makeSession([makeTab()], DEFAULT_SETTINGS, new Date("2026-11-13T12:00:00Z"));
 const backup = () => makeBackup({ folders: [], sessions: [session()] });
 
 test("Pinned tabs are excluded and all windows are selected by default", () => {
-  assert.deepEqual(cleanSettings(), { includePinned: false, scope: "all", theme: "dark", language: "en", layout: "grid" });
+  assert.deepEqual(cleanSettings(), { includePinned: false, closeInternalTabs: false, scope: "all", theme: "dark", language: "en", layout: "grid" });
   assert.equal(cleanSettings({ includePinned: "true", scope: "unexpected" }).includePinned, false);
   assert.equal(cleanSettings({ includePinned: true, scope: "current", theme: "system" }).scope, "current");
+});
+
+test("Empty/internal cleanup is opt-in for fresh and upgraded settings", () => {
+  for (const settings of [undefined, null, {}, { includePinned: true }, { closeInternalTabs: "true" }, { closeInternalTabs: 1 }]) assert.equal(cleanSettings(settings).closeInternalTabs, false);
+  assert.equal(cleanSettings({ closeInternalTabs: true, includePinned: false }).closeInternalTabs, true);
+  assert.equal(cleanSettings({ closeInternalTabs: true }).includePinned, false);
+});
+
+test("Cleanup recognizes browser pages and Vivaldi UI but never guesses from titles or third-party URLs", () => {
+  for (const url of ["about:blank", "about:blank#empty", "about:newtab", "chrome://newtab/", "chrome://settings/privacy", "chrome://version/", "brave://newtab/", "edge://settings/", "opera://startpage/", "vivaldi://startpage", "vivaldi://settings", "vivaldi://about", "chrome-search://local-ntp/local-ntp.html", "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/startpage/startpage.html", "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/components/settings/settings.html"]) assert.equal(isBlankOrInternalUrl(url), true, url);
+  for (const url of [undefined, null, "", "not a URL", "https://startpage.com/", "https://example.com/chrome://settings", "file:///C:/notes.txt", "javascript:alert(1)", "data:text/html,blank", "devtools://devtools/", "chrome-extension://tabdock/manager.html", "chrome-extension://another/newtab.html", "chrome-extension://mpognobbkildjkofajifpdfhcoklimlievil/newtab.html", "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/main.html", "chrome-extension://mpognobbkildjkofajifpdfhcoklimli/window.html", "chrome://settings/\n"]) assert.equal(isBlankOrInternalUrl(url), false, String(url));
 });
 
 test("URL policy rejects executable, transient and destructive browser URLs", () => {

@@ -2,7 +2,7 @@
 
 **Sekmeler kapansın. Fikirler kalsın.**
 
-OneTab benzeri, tamamen yerel çalışan, GPL-3.0 lisanslı bir Chromium sekme arşivi. Beş dilli arayüz; tarayıcıya yüklenen dosyaların tamamı okunabilir kaynak kodudur. Derleme, hesap veya sunucu gerektirmez. Güncel sürüm: **1.2.1**.
+OneTab benzeri, tamamen yerel çalışan, GPL-3.0 lisanslı bir Chromium sekme arşivi. Beş dilli arayüz; tarayıcıya yüklenen dosyaların tamamı okunabilir kaynak kodudur. Derleme, hesap veya sunucu gerektirmez. Güncel sürüm: **1.3.0**.
 
 [English](README.md) · [Gizlilik](PRIVACY.tr.md)
 
@@ -22,7 +22,7 @@ Ekran görüntüsündeki oturumlar örnektir; kurulum boş bir arşivle başlar.
 
 ZIP paketini kullanıyorsan önce kalıcı bir klasöre çıkar; sonra `manifest.json` içeren klasörü seç. Paketlenmemiş eklentinin klasörünü sonradan taşıma veya silme. Ayrıntılar: [KURULUM.md](KURULUM.md).
 
-Güncel ZIP: [GitHub Releases](https://github.com/8bitPrograms/8bitTabs/releases/latest). Destek: [GitHub Issues](https://github.com/8bitPrograms/8bitTabs/issues). Chrome Web Store yayını inceleme süreci tamamlandıktan sonra eklenecek.
+Güncel ZIP: [GitHub Releases](https://github.com/8bitPrograms/8bitTabs/releases/latest). Destek: [GitHub Issues](https://github.com/8bitPrograms/8bitTabs/issues). Mağazadan yapılan kurulumların güncellemeleri Chrome Web Store incelemesinden sonra dağıtılır.
 
 ## Dil seçimi
 
@@ -53,9 +53,13 @@ Arşiv ekranında:
 
 **Ayarlar** bölümünde sabitlenmiş sekmeleri de dahil edebilir ve kapsamı yalnızca bulunduğun pencereye indirebilirsin. Eklenti sayfasındaki arşivle düğmesi için “bu pencere”, arşiv sayfasının bulunduğu penceredir.
 
+**Ayarlar → Boş ve dahili sekmeleri de kapat** seçeneği, arşivleme sırasında boş/yeni sekmeleri, Vivaldi Başlangıç Sayfası'nı ve tarayıcının Ayarlar/Hakkında sayfalarını **arşive eklemeden** kapatır. Yeni kurulumlarda ve güncelleme sonrasında **varsayılan olarak kapalıdır**. Sabitlenmiş sekmeler ancak ayrı sabitlenmiş sekme ayarı da açıksa kapatılır. Pencere kapsamı korunur; arşiv sayfasına, gizli pencerelere ve üçüncü taraf eklenti sayfalarına dokunulmaz.
+
 ## Kayıt güvenliği
 
 Oturum, IndexedDB'ye `strict` dayanıklılık tercihiyle tek işlemde yazılır. Yazma işleminin tamamlanması beklenir ve kayıt geri okunarak doğrulanır. Arşiv sayfası açıldıktan sonra kaynak sekmeler kapatılır. Kaydetme veya doğrulama başarısızsa hiçbir sekme kapatılmaz.
+
+Normal sekmeler varsa isteğe bağlı dahili sekme temizliği de aynı kayıt doğrulamasını bekler. Yalnızca boş/dahili sekmeler varsa boş bir oturum oluşturulmaz; önce arşiv sayfası açılır, sonra seçili temizlik yapılır. Bu sekmelerin arşivlenmeden kapatıldığı bildirimde ayrıca belirtilir.
 
 Kapatmadan hemen önce sekmenin adresi, pencere kimliği ve sabitlenme durumu tekrar kontrol edilir. Bu sırada değişen sekmeler açık bırakılır. Bir sekmenin kapatılamaması arşivdeki kaydı etkilemez. Çok hızlı tekrarlanan araç çubuğu tıklamaları aynı devam eden işleme katılır. Tarayıcı işlem sırasında kapanırsa kaydedilmiş oturum korunur; sonraki başlangıçta eski sekmeleri kapatmaya devam edilmez.
 

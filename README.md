@@ -4,7 +4,7 @@
 
 A local, open-source tab archive for Chromium browsers. One click saves your tabs into a dated session, verifies the saved copy, and closes the archived tabs. **Pinned tabs stay open by default.**
 
-Part of the 8bitPrograms Pixel Core family: a stepped pixel archive box, charcoal surfaces, and amber accents. Version **1.2.1**.
+Part of the 8bitPrograms Pixel Core family: a stepped pixel archive box, charcoal surfaces, and amber accents. Version **1.3.0**.
 
 [Türkçe rehber](README.tr.md) · [Privacy](PRIVACY.md) · [Verification](docs/TEST-REPORT.md)
 
@@ -19,13 +19,14 @@ The sessions in the screenshot are examples. A new installation starts with an e
 3. Choose **Load unpacked** and select the project's **`extension`** directory.
 4. Pin 8bitTabs to your browser toolbar.
 
-Download the install ZIP from [GitHub Releases](https://github.com/8bitPrograms/8bitTabs/releases/latest). If using `8bitTabs-1.2.1-chromium.zip`, extract it to a permanent directory first, then select the directory containing `manifest.json`. The source ZIP also includes tests and documentation; load its `extension` subdirectory.
+Download the install ZIP from [GitHub Releases](https://github.com/8bitPrograms/8bitTabs/releases/latest). If using `8bitTabs-1.3.0-chromium.zip`, extract it to a permanent directory first, then select the directory containing `manifest.json`. The source ZIP also includes tests and documentation; load its `extension` subdirectory.
 
-You do not need Node.js, a build step, an account, or a server to run the extension. Chrome Web Store publication is pending. [Source and support](https://github.com/8bitPrograms/8bitTabs) · [Report an issue](https://github.com/8bitPrograms/8bitTabs/issues).
+You do not need Node.js, a build step, an account, or a server to run the extension. Updates to store installations are distributed after Chrome Web Store review. [Source and support](https://github.com/8bitPrograms/8bitTabs) · [Report an issue](https://github.com/8bitPrograms/8bitTabs/issues).
 
 ## Use your archive
 
 - **Archive:** click the toolbar icon or **Archive tabs** on the archive page. All normal windows are included by default. Settings can limit the action to the current window and include pinned tabs.
+- **Close empty/internal tabs:** enable **Settings → Close empty and internal tabs too** to close blank tabs, new tabs/Start Pages and browser settings pages during archiving. This is **off by default**, including after upgrading. These pages are closed without being archived. Pinned-tab protection and window scope still apply; the archive page and third-party extension pages remain open.
 - **Browse without closing anything:** press **Alt+Shift+O**, or right-click the extension icon and choose **Options**. The archive page opens automatically on first installation.
 - **Find:** search titles, URLs, session names, notes, and folder names. Search is limited to the selected view or folder. Accents and Turkish dotted/dotless I are folded; German `ß` also matches `ss`.
 - **Organize:** rename sessions, add notes, star favorites, and move sessions into folders. Choose cards or a list; the view is remembered.
@@ -47,11 +48,13 @@ Dark, light, and system themes are available. The app UI language is independent
 
 The archive stores URLs, titles, session timestamps, tab/window order, pin state, mute state, names, folders, stars, and notes. It does **not** capture page content, form values, scroll position, back/forward history, authentication sessions, or browser tab groups. Save unfinished work before archiving its tab.
 
-Private windows are disabled. Supported URLs include HTTP, HTTPS, file URLs, `about:blank`, and a small allowlist of ordinary Chromium pages. Other extensions, developer tools, executable/temporary URLs, and browser crash/restart pages are skipped. Browser policies may prevent reopening some file or internal URLs.
+Private windows are disabled. One-click archiving saves HTTP, HTTPS and file URLs. Blank and browser-internal pages stay open unless their separate cleanup setting is enabled. This includes Vivaldi's Start Page, Settings and About pages, including its built-in UI addresses. Third-party extension pages, developer tools, and executable/temporary URLs stay untouched. Older backups and supported imports may still contain a small allowlist of internal links; browser policies can prevent reopening some file or internal URLs.
 
 ## Save before close
 
 The session is written in a single IndexedDB transaction with a strict durability preference. The transaction must complete, and the saved record must read back unchanged. The archive page must be reachable before closing begins.
+
+When ordinary tabs are present, optional internal-page cleanup also waits for their saved session to be verified. If only empty/internal tabs are selected, no empty session is created; the archive page is made reachable first. Internal-page closes are reported separately from saved tabs.
 
 Before each close, the extension checks the tab's URL, window, and pin state again. A tab that changed during saving stays open. One failed close does not delete its archived copy or prevent other tabs being processed. Rapid toolbar clicks share the in-progress archive operation. A later browser startup never resumes an old closing job.
 
@@ -120,7 +123,7 @@ scripts/           Browser checks, asset generation and packaging
 store/             Listing drafts, icon, screenshots and promo artwork
 ```
 
-The complete test scope and its limits are in [docs/TEST-REPORT.md](docs/TEST-REPORT.md). Prepared listing fields and upload files are explained in [store/submission/README.tr.md](store/submission/README.tr.md). Store publication still requires the publisher's account declarations and the store's review.
+The complete test scope and its limits are in [docs/TEST-REPORT.md](docs/TEST-REPORT.md). Prepared listing fields and upload files are explained in [store/submission/README.tr.md](store/submission/README.tr.md). Store updates are submitted for review separately by the publisher.
 
 ## License
 
